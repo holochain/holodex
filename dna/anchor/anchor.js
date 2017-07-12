@@ -26,7 +26,7 @@ function addAnchor()
   debug("Entered addAnchor - main hash - "+anchor_main_hash);
   commit("anchor_links", {Links:[{Base:dna,Link:anchor_main_hash,Tag:"Anchor"}]});
   var lnk = getLink(dna,"Anchor",{Load : true});
-  debug("Main anchor hash on link - "+lnk.Links[0].H);
+  debug("Main anchor hash on link - "+lnk);
   return lnk.Links[0].H;
 }
 
@@ -101,15 +101,16 @@ function anchor_type_list()
   anchor_main_hash=getMainAchorHash();
   var anchor_type=doGetLinkLoad(anchor_main_hash,"Anchor_Type");
 
-  debug("AnchorType:"+anchor_type);
   for(var j=0;j<anchor_type.length;j++)
   {
     var temp = anchor_type[j].Anchor_Type;
     debug(temp);
-    anchor_type_list.push(anchor_type[j].Anchor_Type);
+    var parsed = JSON.parse(temp);
+    debug(parsed.Anchor_Type);
+    anchor_type_list.push(parsed.Anchor_Type);
   }
 
-  return anchor_type_list.toString();
+  return anchor_type_list;
 }
 
 /*****
