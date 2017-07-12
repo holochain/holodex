@@ -1,6 +1,10 @@
 function genesis(){
-  addAnchor();
-  IndexContent("Indexing this content using holodex app.",IgnoreWords);
+  //debug("Calling addAnchor function");
+  baseAnchorHash = call("anchor","addAnchor","");
+  dubug("Base anchor added w");
+  ContentToIndex = "We are Indexing this content using holodex app.";
+  IgnoreWords = "this This the is a an are and to be we";
+  IndexContent(ContentToIndex,IgnoreWords);
 }
 
 function IndexContent(content,IgnoreWords)
@@ -14,12 +18,30 @@ function IndexContent(content,IgnoreWords)
         if(keywords[i]==keywordsIgnore[j])
             break;
         else {
-            //Code to be added for checking if the keyword has already been created for indexing
-            anchor_type_create(keywords[i]);
-            var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:content};
-            anchor_create(IndexContentByKeyword);
+            checkhash = makeHash(keywords[i]);
+            var exists = getkeyword(chcekhash);
+            if(exists=="")
+            {
+              call("anchor","anchor_type_create",keywords[i]);
+              var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:content};
+              call("anchor","anchor_create",IndexContentByKeyword);
+            }
+            else {
+              var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:content};
+              call("anchor","anchor_create",IndexContentByKeyword);
+            }
           }
     }
     i--;
   }
 }
+
+function getkeyword(checkhash)
+{
+  var sources = get(checkhash,{GetMask:HC.GetMask.Sources});
+  if (isErr(sources)) {sources = [];}
+  if (sources != undefined) {
+    var n = sources.length -1;
+    return (n >= 0) ? sources[n] : "";
+}
+return "";}

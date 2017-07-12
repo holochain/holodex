@@ -23,8 +23,10 @@ function addAnchor()
   var dna = App.DNA.Hash;
   var anchor_main = {Anchor_Type:"Anchor_Type",Anchor_Text:""};
   var anchor_main_hash=commit("anchor",anchor_main);
-  commit("directory_links", {Links:[{Base:dna,Link:anchor_main_hash,Tag:"Anchor"}]});
+  debug("Entered addAnchor - main hash - "+anchor_main_hash);
+  commit("anchor_links", {Links:[{Base:dna,Link:anchor_main_hash,Tag:"Anchor"}]});
   var lnk = getLink(dna,"Anchor",{Load : true});
+  debug("Main anchor hash on link - "+lnk.Links[0].H);
   return lnk.Links[0].H;
 }
 
