@@ -1,5 +1,5 @@
 function genesis(){
-  //debug("Calling addAnchor function");
+  //Calling addAnchor function for creating the base anchor
   baseAnchorHash = call("anchor","addAnchor","");
   debug("Base anchor added with hash - "+baseAnchorHash);
   //ContentToIndex = "holodex : We are Indexing this content using holodex app.";
@@ -8,19 +8,85 @@ function genesis(){
   //CheckIndexedKeywords();
 }
 
+function searchKeywords(searchString)
+{
+  var searchArr = searchString.split(/,| |:|-/);
+  var i = searchArr.length;
+  var mergedList = [];
+  //var list = [];
+  var list;
+  debug("Array contents : ");
+  i--;
+  while(i>=0)
+  {
+    debug(searchArr[i]);
+    list = call("anchor","anchor_list",searchArr[i]);
+    //debug("All content for keyword temp: "+temp);
+    mergedList=union(mergedList,list);
+    i--;
+  }
+  return mergedList;
+}
+
+function union(mergedList,anchorList)
+{
+
+  debug("Inside union : "+anchorList);
+  for(var j=0;j<anchorList.Links.length;j++)
+  {
+    debug("Inside for");
+    var temp = anchorList.Links[j].E;
+    debug(temp);
+    var begin = temp.indexOf('Anchor_Text');
+    var end = temp.indexOf('Anchor_Type');
+
+    var sub = temp.substr(begin+14,end-19);
+    debug("Extracted anchor text  :"+sub);
+  }
+
+  debug("In union : "+mergedList.length);
+  if(mergedList.length==0)
+    mergedList.push(list);
+  else
+  {
+    check=find(mergedList,sub);
+    debug("In unison else");
+    if(check==false)
+    {
+      mergedList.push(sub);
+    }
+  }
+  debug(mergedList);
+  return mergedList;
+}
+
+function find(mainArr, check)
+{
+
+  for(i=0;i<=mainArr.length;i++)
+  {
+    if(mainArr[i] == check)
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
+
 function IndexContent(content)
 {
-  IgnoreWords = "this This the is a an are and to be we :";
+  IgnoreWords = "this This the is a an are and to be we : -";
   var keywords=content.split(" ");
   var i = keywords.length;
-  debug("Printing array keywords : "+keywords);
+  debug("Indexing content : "+keywords);
   debug("Content length = "+i);
   var keywordsIgnore=IgnoreWords.split(" ");
   i--;
   while (i>=0) {
     //debug("First word to be indexed : "+keywords[i]);
     var ilen=keywordsIgnore.length;
-    debug("Ignore words length = "+ilen+" Iteration = "+i);
+    //debug("Ignore words length = "+ilen+" Iteration = "+i);
     for(j=0;j<ilen-1;j++){
         if(keywords[i]==keywordsIgnore[j])
         {
@@ -30,12 +96,12 @@ function IndexContent(content)
         else {
 
             checkhash = makeHash(keywords[i]);
-            debug("Checkhash value : "+checkhash);
+            //debug("Checkhash value : "+checkhash);
             var exists = getkeyword(keywords[i],"");
 
             if(exists.name=="HolochainError")
             {
-              debug("Inside IF");
+              //debug("Inside IF");
               call("anchor","anchor_type_create",keywords[i]);
               var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:content};
               call("anchor","anchor_create",IndexContentByKeyword);
@@ -49,12 +115,12 @@ function IndexContent(content)
               var checkexist = getkeyword(keywords[i],content);
 
                 if(checkexist.C != JSON.stringify(IndexContentByKeyword)){
-                debug("inside if else if");
+                //debug("inside if else if");
                 call("anchor","anchor_create",IndexContentByKeyword);
                 debug("Index created for - "+keywords[i]);
               }
               else{
-                debug("Index for the keywordfor this content already exists !");
+                debug("Index for the keyword for this content already exists !");
               }
               break;
             }

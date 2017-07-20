@@ -27,7 +27,8 @@
           {
               "Name": "anchor",
               "DataFormat": "json",
-              "Sharing": "public"
+              "Sharing": "public",
+              "SchemaFile": "anchor.json"
           },
           {
               "Name": "anchor_links",
@@ -60,8 +61,12 @@
             "Name": "anchor_type_list",
             "CallingType": "string",
             "Exposure":"public"
+          },
+          {
+            "Name": "anchor_list",
+            "CallingType": "string",
+            "Exposure":"public"
           }
-
 
         ]
     },
@@ -86,6 +91,11 @@
       "Functions": [
         {
           "Name": "IndexContent",
+          "CallingType": "string",
+          "Exposure": "public"
+        },
+        {
+          "Name": "searchKeywords",
           "CallingType": "string",
           "Exposure": "public"
         }

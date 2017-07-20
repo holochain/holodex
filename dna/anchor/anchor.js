@@ -23,10 +23,10 @@ function addAnchor()
   var dna = App.DNA.Hash;
   var anchor_main = {Anchor_Type:"Anchor_Type",Anchor_Text:""};
   var anchor_main_hash=commit("anchor",anchor_main);
-  debug("Entered addAnchor - main hash - "+anchor_main_hash);
+  //debug("Entered addAnchor - main hash - "+anchor_main_hash);
   commit("anchor_links", {Links:[{Base:dna,Link:anchor_main_hash,Tag:"Anchor"}]});
   var lnk = getLink(dna,"Anchor",{Load : true});
-  debug("Main anchor hash on link - "+lnk);
+  //debug("Main anchor hash on link - "+lnk);
   return lnk.Links[0].H;
 }
 
@@ -44,13 +44,13 @@ function anchor_type_create(anchor_type)
 function anchor_create(new_anchor)
 {
 
-  var anchor_type=new_anchor.Anchor_Type;
-  var anchor_text=new_anchor.Anchor_Text;
-  var new_anchor = {Anchor_Type:anchor_type,Anchor_Text:anchor_text};
+
   var new_anchorHash=commit("anchor",new_anchor);
-  var anchorTypeHash = getAnchorTypeHash(anchor_type);
+  debug("Indexing content : "+new_anchor.Anchor_Text+" for keyword : "+new_anchor.Anchor_Type);
+  var anchorTypeHash = getAnchorTypeHash(new_anchor.Anchor_Type);
   anchor_link(anchorTypeHash,new_anchorHash);
   var lnk = getLink(anchorTypeHash,"Anchor_Text",{Load:true});
+  debug(lnk);
   return lnk.Links[0].H;
 }
 
@@ -113,6 +113,35 @@ function anchor_type_list()
   return anchor_type_list;
 }
 
+function anchor_list(anchorType)
+{
+  var anchor_text_list=[];
+  var anchor_hash_list=[];
+  anchor_type_hash=getAnchorTypeHash(anchorType);
+  //var anchorList = getLink(anchor_type_hash,"Anchor_Text",{Load:true});
+
+  var anchorList=doGetLinkLoad(anchor_type_hash,"Anchor_Text");
+  debug(anchorList);
+  debug("Anchor list function : "+anchorList.length);
+
+  /*for(var j=0;j<anchorList.Links.length;j++)
+  {
+    debug("Inside for");
+    var temp = anchorList.Links[j].E;
+    var contentHash = anchorList.Links[j].H;
+
+    var begin = temp.indexOf('Anchor_Text');
+    var end = temp.indexOf('Anchor_Type');
+
+    var sub = temp.substr(begin+14,end-19);
+    debug("Extracted anchor text  :"+sub);
+    anchor_text_list.push(sub);
+    anchor_hash_list.push(contentHash);
+
+  }*/
+
+  return anchorList;
+}
 /*****
 *****/
 // helper function to do getLink call, handle the no-link error case, and copy the returned entry values into a nicer array
