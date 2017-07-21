@@ -13,47 +13,50 @@ function searchKeywords(searchString)
   var searchArr = searchString.split(/,| |:|-/);
   var i = searchArr.length;
   var mergedList = [];
-  //var list = [];
-  var list;
+  var list = [];
+
   debug("Array contents : ");
   i--;
+
   while(i>=0)
   {
+    debug("While loop ------------ i = "+i);
     debug(searchArr[i]);
     list = call("anchor","anchor_list",searchArr[i]);
     //debug("All content for keyword temp: "+temp);
-    mergedList=union(mergedList,list);
+    debug("Printing list from calling function : ");
+    debug(list);
+    var listArr = list.split(",AT_");
+    debug(listArr);
+    for(var m=0;m<listArr.length;m++)
+    {
+      mergedList=union(mergedList,listArr[m]);
+    }
+
     i--;
   }
   return mergedList;
 }
 
-function union(mergedList,anchorList)
+function union(mergedList,list)
 {
 
-  debug("Inside union : "+anchorList);
-  for(var j=0;j<anchorList.Links.length;j++)
-  {
-    debug("Inside for");
-    var temp = anchorList.Links[j].E;
-    debug(temp);
-    var begin = temp.indexOf('Anchor_Text');
-    var end = temp.indexOf('Anchor_Type');
+  //debug("Inside union : "+list);
 
-    var sub = temp.substr(begin+14,end-19);
-    debug("Extracted anchor text  :"+sub);
-  }
-
-  debug("In union : "+mergedList.length);
+  //debug("In union : "+mergedList.length);
   if(mergedList.length==0)
-    mergedList.push(list);
+  {
+    if(list != "")
+      mergedList.push(list);
+  }
   else
   {
-    check=find(mergedList,sub);
-    debug("In unison else");
+    check=find(mergedList,list);
+    //debug("In unison else");
     if(check==false)
     {
-      mergedList.push(sub);
+      if(list != "")
+      mergedList.push(list);
     }
   }
   debug(mergedList);
@@ -65,6 +68,7 @@ function find(mainArr, check)
 
   for(i=0;i<=mainArr.length;i++)
   {
+    //debug("In for find");
     if(mainArr[i] == check)
     {
       return true;

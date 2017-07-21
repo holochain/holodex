@@ -121,8 +121,25 @@ function anchor_list(anchorType)
   //var anchorList = getLink(anchor_type_hash,"Anchor_Text",{Load:true});
 
   var anchorList=doGetLinkLoad(anchor_type_hash,"Anchor_Text");
-  debug(anchorList);
-  debug("Anchor list function : "+anchorList.length);
+
+  debug("Returning from anchor list function : ");
+  debug(anchorList.length);
+  for(var j=0;j<anchorList.length;j++)
+  {
+    //debug("in for loop");
+    var temp = anchorList[j].Anchor_Text;
+    var parsed = JSON.parse(temp);
+    //debug(parsed.Anchor_Text);
+    if(j!=0)
+    var toPush = "AT_"+parsed.Anchor_Text;
+    else {
+      var toPush = parsed.Anchor_Text;
+    }
+    //debug(toPush);
+    //anchor_text_list.push(parsed.Anchor_Text);
+    anchor_text_list.push(toPush);
+  }
+
 
   /*for(var j=0;j<anchorList.Links.length;j++)
   {
@@ -139,8 +156,8 @@ function anchor_list(anchorType)
     anchor_hash_list.push(contentHash);
 
   }*/
-
-  return anchorList;
+  debug(anchor_text_list);
+  return anchor_text_list;
 }
 /*****
 *****/

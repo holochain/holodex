@@ -1,6 +1,6 @@
 [
   {
-      "Convey":"Checking if the Indexes for a given conent are getting created",
+      "Convey":"Checking if the Indexes for a given conent are getting created. Returns the keywords for which index has been created.",
       "Zome": "indexcontent",
       "FnName": "IndexContent",
       "Input" : "holodex : We are Indexing this content using holodex app.",
@@ -10,21 +10,21 @@
       "Regexp": ""
   },
   {
-      "Convey":"Checking if the Indexes for a given conent are getting created",
+      "Convey":"Checking if the Indexes for a given conent are getting created.Returns the keywords for which index has been created.",
       "Zome": "indexcontent",
       "FnName": "IndexContent",
       "Input" : "holodex can also be used for searching keywords",
-      "Output": "are,:,We,using,app.,holodex,content,Indexing",
+      "Output": "used,are,also,for,:,searching,We,using,app.,holodex,content,be,can,keywords,Indexing",
       "Exposure":"public",
       "Err": "",
       "Regexp": ""
   },
   {
-      "Convey":"Checking the result for the search function for a string of words",
+      "Convey":"Checking the result for the search function for a string of words. The search should return the list of content/s which have any of the keywords",
       "Zome": "indexcontent",
       "FnName": "searchKeywords",
       "Input" : "holodex,We are searching:here,holodex",
-      "Output": "holodex,We,are,searching,here",
+      "Output": "holodex : We are Indexing this content using holodex app.,holodex can also be used for searching keywords",
       "Exposure":"public",
       "Err": "",
       "Regexp": ""
