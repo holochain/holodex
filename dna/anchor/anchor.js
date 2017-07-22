@@ -124,23 +124,28 @@ function anchor_list(anchorType)
 
   debug("Returning from anchor list function : ");
   debug(anchorList.length);
+/*
   for(var j=0;j<anchorList.length;j++)
   {
     //debug("in for loop");
+    debug("typeof anchorlist: "+typeof anchorList);
+    var ser = JSON.stringify(anchorList);
+    debug("typeof Serialized object : "+typeof ser);
     var temp = anchorList[j].Anchor_Text;
-    var parsed = JSON.parse(temp);
+    debug("typeof temp : "+typeof temp)
+    // var parsed = JSON.parse(temp);
     //debug(parsed.Anchor_Text);
-    if(j!=0)
+    /*if(j!=0)
     var toPush = "AT_"+parsed.Anchor_Text;
     else {
       var toPush = parsed.Anchor_Text;
     }
     //debug(toPush);
     //anchor_text_list.push(parsed.Anchor_Text);
-    anchor_text_list.push(toPush);
-  }
+    anchor_text_list.push(temp)
+  }*/
 
-
+var ser = JSON.stringify(anchorList);
   /*for(var j=0;j<anchorList.Links.length;j++)
   {
     debug("Inside for");
@@ -156,8 +161,8 @@ function anchor_list(anchorType)
     anchor_hash_list.push(contentHash);
 
   }*/
-  debug(anchor_text_list);
-  return anchor_text_list;
+  //debug(anchor_text_list.length);
+  return ser;
 }
 /*****
 *****/

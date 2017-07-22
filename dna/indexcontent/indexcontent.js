@@ -25,12 +25,15 @@ function searchKeywords(searchString)
     list = call("anchor","anchor_list",searchArr[i]);
     //debug("All content for keyword temp: "+temp);
     debug("Printing list from calling function : ");
-    debug(list);
-    var listArr = list.split(",AT_");
-    debug(listArr);
-    for(var m=0;m<listArr.length;m++)
+    //debug("typeof list: "+typeof list);
+    //debug(list);
+    var temp = JSON.parse(list);
+
+    for(var m=0;m<temp.length;m++)
     {
-      mergedList=union(mergedList,listArr[m]);
+      var temp1 = JSON.parse(temp[m].Anchor_Text);
+      debug(temp1.Anchor_Text);
+      mergedList=union(mergedList,temp1.Anchor_Text);
     }
 
     i--;
@@ -41,9 +44,7 @@ function searchKeywords(searchString)
 function union(mergedList,list)
 {
 
-  //debug("Inside union : "+list);
-
-  //debug("In union : "+mergedList.length);
+    //debug("In union : "+mergedList.length);
   if(mergedList.length==0)
   {
     if(list != "")
