@@ -1,0 +1,12 @@
+[
+  {
+      "Convey":"Checking if the Indexes for a given conent are getting created",
+      "Zome": "indexcontent",
+      "FnName": "IndexContent",
+      "Input" : "holodex : We are Indexing this content using holodex app.",
+      "Output": "are,:,We,using,app.,holodex,content,Indexing",
+      "Exposure":"public",
+      "Err": "",
+      "Regexp": ""
+  }
+]
