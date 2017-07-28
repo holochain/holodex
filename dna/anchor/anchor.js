@@ -43,13 +43,16 @@ function anchor_type_create(anchor_type)
 
 function anchor_create(new_anchor)
 {
-
-
+  debug("Anchor create function : ");
+  debug("Anchor type : "+new_anchor.Anchor_Type);
+  debug("Anchor type : "+new_anchor.Anchor_Text);
+  //new_anchor = {Anchor_Type:new_anchor.Anchor_Type,Anchor_Text:new_anchor.Anchor_Text};
   var new_anchorHash=commit("anchor",new_anchor);
   debug("Indexing content : "+new_anchor.Anchor_Text+" for keyword : "+new_anchor.Anchor_Type);
   var anchorTypeHash = getAnchorTypeHash(new_anchor.Anchor_Type);
   anchor_link(anchorTypeHash,new_anchorHash);
   var lnk = getLink(anchorTypeHash,"Anchor_Text",{Load:true});
+  debug("Anchor created : ");
   debug(lnk);
   return lnk.Links[0].H;
 }
@@ -117,11 +120,13 @@ function anchor_list(anchorType)
 {
   var anchor_text_list=[];
   var anchor_hash_list=[];
+  debug("Pringing anchor type :"+anchorType);
   anchor_type_hash=getAnchorTypeHash(anchorType);
   //var anchorList = getLink(anchor_type_hash,"Anchor_Text",{Load:true});
 
   var anchorList=doGetLinkLoad(anchor_type_hash,"Anchor_Text");
-
+  //debug("Anchor list : ");
+  //debug(anchorList);
   debug("Returning from anchor list function : ");
   debug(anchorList.length);
 /*
