@@ -77,7 +77,12 @@
       "CodeFile": "indexcontent.js",
       "Entries": [
         {
-          "Name": "ContentToIndex",
+          "Name": "ContentToIndexhash1",
+          "DataFormat": "string",
+          "Sharing": "public"
+        },
+        {
+          "Name": "ContentToIndexhash2",
           "DataFormat": "string",
           "Sharing": "public"
         },
@@ -91,7 +96,7 @@
       "Functions": [
         {
           "Name": "IndexContent",
-          "CallingType": "string",
+          "CallingType": "json",
           "Exposure": "public"
         },
         {
