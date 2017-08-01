@@ -4,6 +4,8 @@ function genesis(){
   baseAnchorHash = call("anchor","addAnchor","");
   debug("Base anchor added with hash - "+baseAnchorHash);
 
+  
+
   var ContentToIndex1 = {content:"holodex : We are Indexing this content using holodex app. this",details:"can include timestamp, etc."};
   ContentToIndexhash1 = makeHash(ContentToIndex1);
 
@@ -26,12 +28,11 @@ function searchKeywords(searchString)
   var mergedList = [];
   var list = [];
 
-  debug("Array contents : ");
   i--;
 
   while(i>=0)
   {
-    debug("While loop ------------ i = "+i);
+
     debug(searchArr[i]);
     list = call("anchor","anchor_list",searchArr[i]);
 
@@ -96,25 +97,18 @@ function IndexContent(content,hashOfObject,language)
 
 
   var HTIgnoreWords = getIgnoreWords(language);
-  //debug(HTIgnoreWords);
 
-  var IgnoreWords = "this is the a an are and can also with : -";
   var keywords=content.split(" ");
   var i = keywords.length;
-  debug("Indexing content : "+keywords);
-  debug("Content length = "+i);
-  var keywordsIgnore=IgnoreWords.split(" ");
+
   i--;
   while (i>=0) {
 
-    //var ilen=keywordsIgnore.length;
 
-    //for(j=0;j<ilen-1;j++){
-        //if(keywords[i]==keywordsIgnore[j])
         if(HTIgnoreWords[keywords[i]]==true)
         {
             debug("Ignoring keyword : "+keywords[i]);
-            //break;
+
         }
         else {
 
@@ -128,11 +122,11 @@ function IndexContent(content,hashOfObject,language)
               var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:hashOfObject};
               call("anchor","anchor_create",IndexContentByKeyword);
               debug("Index created for - "+keywords[i]);
-              //break;
+
             }
             else {                                              //Else, only create the anchor for content and link content(object)
                                                                 //to keyword
-              debug("Inside ELSE");
+
               var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:hashOfObject};
 
               var checkexist = getkeyword(keywords[i],hashOfObject);
@@ -145,10 +139,10 @@ function IndexContent(content,hashOfObject,language)
               else{
                 debug("Index for the keyword for this content already exists !");
               }
-              //break;
+
             }
           }
-    //}
+
     i--;
   }
   var lnk= call("anchor","anchor_type_list","");
@@ -166,8 +160,8 @@ function getkeyword(keyword,hashOfObject)
   var kahash = makeHash(keywordAnchor);
 
   var sources = get(kahash,{GetMask:HC.GetMask.Suorces});
-  debug("Get keyword function : ")
-  debug(sources);
+  //debug("Get keyword function : ")
+  //debug(sources);
 
   return sources;
 }
