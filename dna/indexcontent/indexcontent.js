@@ -3,21 +3,19 @@ function genesis(){
   //Calling addAnchor function for creating the base anchor
   baseAnchorHash = call("anchor","addAnchor","");
   debug("Base anchor added with hash - "+baseAnchorHash);
+}
 
-  
-
-  var ContentToIndex1 = {content:"holodex : We are Indexing this content using holodex app. this",details:"can include timestamp, etc."};
-  ContentToIndexhash1 = makeHash(ContentToIndex1);
-
-  var ContentToIndex2 = {content:"holodex can also be used for searching keywords",details:"can include timestamp,lication, etc."};
-  ContentToIndexhash2 = makeHash(ContentToIndex2);
-
-
-  //called in genesis temporarily. Once bridging between apps gets workig, index content will be called from the HC app that is
-  //using holodex
-  IndexContent(ContentToIndex1.content,ContentToIndexhash1,"English");
-  IndexContent(ContentToIndex2.content,ContentToIndexhash2,"English");
-
+function receive(input, msg)
+{
+  if(msg.type == "createIndex")
+  {
+    var retVal = IndexContent(msg.content,msg.hashOfObject,msg.language);
+  }
+  else if(msg.type == "searchKeywords")
+  {
+    var retVal = searchKeywords(msg.searchString);
+  }
+  return retVal;
 }
 
 //Function called by the HC app to search for a string of words and get all the objects indexed for the words.
@@ -147,7 +145,8 @@ function IndexContent(content,hashOfObject,language)
   }
   var lnk= call("anchor","anchor_type_list","");
   var strlnk = lnk.toString();
-  return lnk;
+  debug("Object indexed for keywords : "+strlnk);
+  return hashOfObject;
 
 }
 

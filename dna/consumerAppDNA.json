@@ -27,6 +27,16 @@
         "Name": "selectIndexNode",
         "CallingType": "string",
         "Exposure": "public"
+      },
+      {
+        "Name": "indexObject",
+        "CallingType": "json",
+        "Exposure": "public"
+      },
+      {
+        "Name": "searchContent",
+        "CallingType": "string",
+        "Exposure": "public"
       }
 
     ]

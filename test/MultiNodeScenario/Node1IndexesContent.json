@@ -1,0 +1,38 @@
+[
+    {
+        "Convey":"Node 1 is set as index node at bridge genesis ",
+        "Zome":"consumerApp",
+        "FnName":"bridgeGenesis",
+        "Input":"true",
+        "Output":"%h2%",
+        "Err":"",
+        "Time":0
+    },
+    {
+        "Convey":"Node 1 Chooses itself as node for indexing",
+        "Zome":"consumerApp",
+        "FnName":"selectIndexNode",
+        "Input":"",
+        "Output":"%key%",
+        "Err":"",
+        "Time":50
+    },
+    {
+        "Convey":"Function for verifying the result of index",
+        "Zome":"consumerApp",
+        "FnName":"createObject1ForTest",
+        "Input":"",
+        "Output":"%h1%",
+        "Err":"",
+        "Time":75
+    },
+    {
+        "Convey":"Node 1 indexses content",
+        "Zome":"consumerApp",
+        "FnName":"indexObject",
+        "Input":"{\"content\":\"holodex : We are Indexing this content using holodex app. this\",\"details\":\"can include timestamp, etc.\"}",
+        "Output":"%r2%",
+        "Err":"",
+        "Time":100
+    }
+]

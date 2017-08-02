@@ -1,0 +1,29 @@
+[
+    {
+        "Convey":"Node 3 is set as non index node at bridge genesis ",
+        "Zome":"consumerApp",
+        "FnName":"bridgeGenesis",
+        "Input":"false",
+        "Output":"%h2%",
+        "Err":"",
+        "Time":100
+    },
+    {
+        "Convey":"Node 3 Chooses an index node for indexing",
+        "Zome":"consumerApp",
+        "FnName":"selectIndexNode",
+        "Input":"",
+        "Output":"%h1%",
+        "Err":"",
+        "Time":50
+    },
+    {
+        "Convey":"Node 3 performs search and receives expected result",
+        "Zome":"consumerApp",
+        "FnName":"searchContent",
+        "Input":"holodex,We are searching:here,holodex",
+        "Output":"QmNTFhCuQhUQPCverEff4zFr6b54FgLnrnBuGWyGfYaofV,QmYZEj5N2zMuVBATP8cVSHAtF5an8VE4YZVcPsnLATPmbG",
+        "Err":"",
+        "Time":2500
+    }
+]

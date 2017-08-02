@@ -1,0 +1,38 @@
+[
+    {
+        "Convey":"Node 2 is set as non index node at bridge genesis ",
+        "Zome":"consumerApp",
+        "FnName":"bridgeGenesis",
+        "Input":"false",
+        "Output":"%h2%",
+        "Err":"",
+        "Time":0
+    },
+    {
+        "Convey":"Node 2 Chooses an index node for indexing",
+        "Zome":"consumerApp",
+        "FnName":"selectIndexNode",
+        "Input":"",
+        "Output":"%h1%",
+        "Err":"",
+        "Time":50
+    },
+    {
+        "Convey":"Function for verifying the result of index",
+        "Zome":"consumerApp",
+        "FnName":"createObject2ForTest",
+        "Input":"",
+        "Output":"%h1%",
+        "Err":"",
+        "Time":75
+    },
+    {
+        "Convey":"Node 2 indexses content",
+        "Zome":"consumerApp",
+        "FnName":"indexObject",
+        "Input":"{\"content\":\"holodex can also be used for searching keywords\",\"details\":\"can include timestamp,lication, etc.\"}",
+        "Output":"%r2%",
+        "Err":"",
+        "Time":100
+    }
+]
