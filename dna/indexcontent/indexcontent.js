@@ -178,7 +178,7 @@ function loadIW(language)
   var ignoreListarr = ignoreList.split(" ");
   var IgnoreWords = {};
 
-  for(var i=0; i<ignoreListarr.lengt;i++)
+  for(var i=0; i<ignoreListarr.length;i++)
   {
     IgnoreWords[ignoreListarr[i]] = true;
   }
