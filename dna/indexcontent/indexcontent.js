@@ -5,10 +5,12 @@ function genesis(){
   debug("Base anchor added with hash - "+baseAnchorHash);
 
   var ContentToIndex1 = {content:"holodex : We are Indexing this content using holodex app. this",details:"can include timestamp, etc."};
-  var ContentToIndexhash1 = makeHash(ContentToIndex1);
+
+  ContentToIndexhash1 = makeHash(ContentToIndex1);
 
   var ContentToIndex2 = {content:"holodex can also be used for searching keywords",details:"can include timestamp,lication, etc."};
-  var ContentToIndexhash2 = makeHash(ContentToIndex2);
+  ContentToIndexhash2 = makeHash(ContentToIndex2);
+
 
 
   //called in genesis temporarily. Once bridging between apps gets workig, index content will be called from the HC app that is
@@ -47,21 +49,25 @@ function searchKeywords(searchString)
 
     i--;
   }
-  var jsonmer = JSON.parse(JSON.stringify(Object.keys(mergedList)));
 
+  var jsonmer = Object.keys(mergedList);
 
   return jsonmer;
 }
 
 //To provide a list of all the objects that are indexed against the search string
+
 function union(mergedList,listH)
+
 {
   var listKeys = Object.keys(listH);
+
 
   debug(listKeys);
   for (var i=0;i<listKeys.length;i++)
   {
     if(mergedList[listKeys[i] == true])
+
     {
       debug("Already added to merged !");
     }
@@ -82,12 +88,13 @@ function IndexContent(content,hashOfObject,language)
 
   var HTIgnoreWords = getIgnoreWords(language);
 
-  var IgnoreWords = "this is the a an are and can also with : -";
+
   var keywords=content.split(" ");
   var i = keywords.length;
 
   i--;
   while (i>=0) {
+
 
 
         if(HTIgnoreWords[keywords[i]]==true)
@@ -125,6 +132,7 @@ function IndexContent(content,hashOfObject,language)
                 debug("Index for the keyword for this content already exists !");
               }
 
+
             }
           }
 
@@ -153,6 +161,7 @@ function getkeyword(keyword,hashOfObject)
 //This is the list of common words(stop words) which do not need to Indexed for search. This list needs to be enhanced to cover all
 //possible ignore words
 function getIgnoreWords(language)
+
 {
   var IWreturn = {};
   debug("Entered IW return function !")
