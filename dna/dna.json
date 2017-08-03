@@ -1,0 +1,94 @@
+{
+  "scaffoldVersion": "0.0.1",
+  "generator": "hc-scaffold:0.0.2+afbc120",
+  "Version": 1,
+  "UUID": "2ef9fa48-2a33-424f-a4bf-b0591b2a71d8",
+  "Name": "holodex",
+
+  "Properties": {
+    "description": "A pluggable app for other holochain based apps for enabling indexing",
+    "language": "en"
+  },
+
+  "PropertiesSchemaFile": "properties_schema.json",
+  "DHTConfig": {
+    "HashType": "sha2-256"
+  },
+  "BasedOn": {
+      "H": null
+  },
+  "Zomes": [
+  {
+      "Name": "anchor",
+      "Description": "Anchor zome",
+      "RibosomeType": "js",
+      "CodeFile": "anchor.js",
+      "Entries": [
+          {
+              "Name": "anchor",
+              "DataFormat": "json",
+              "Sharing": "public",
+              "SchemaFile": "anchor.json"
+          },
+          {
+              "Name": "anchor_links",
+              "DataFormat": "links",
+              "Sharing": "public"
+          }
+      ],
+      "Functions": [
+          {
+              "Name": "anchor_type_create",
+              "CallingType": "string",
+              "Exposure":"public"
+          },
+          {
+            "Name": "addAnchor",
+            "CallingType": "string",
+            "Exposure":"public"
+          },
+          {
+            "Name": "anchor_create",
+            "CallingType": "json",
+            "Exposure":"public"
+          },
+          {
+            "Name": "anchor_update",
+            "CallingType": "json",
+            "Exposure":"public"
+          },
+          {
+            "Name": "anchor_type_list",
+            "CallingType": "string",
+            "Exposure":"public"
+          },
+          {
+            "Name": "anchor_list",
+            "CallingType": "string",
+            "Exposure":"public"
+          }
+
+        ]
+    },
+    {
+      "Name": "indexcontent",
+      "Description": "Generic indexing functions provision",
+      "RibosomeType": "js",
+      "CodeFile": "indexcontent.js",
+      
+
+      "Functions": [
+        {
+          "Name": "IndexContent",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "searchKeywords",
+          "CallingType": "string",
+          "Exposure": "public"
+        }
+      ]
+    }
+  ]
+}
