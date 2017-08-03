@@ -3,7 +3,7 @@ function genesis() {
   return true;
 }
 
-//USED IN GENESIS TO AN THE INITIAL ANCHOR
+//USED IN GENESIS TO ADD THE INITIAL ANCHOR
 
 function getMainAchorHash()
 {

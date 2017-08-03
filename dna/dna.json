@@ -75,24 +75,7 @@
       "Description": "Generic indexing functions provision",
       "RibosomeType": "js",
       "CodeFile": "indexcontent.js",
-      "Entries": [
-        {
-          "Name": "ContentToIndexhash1",
-          "DataFormat": "string",
-          "Sharing": "public"
-        },
-        {
-          "Name": "ContentToIndexhash2",
-          "DataFormat": "string",
-          "Sharing": "public"
-        },
-        {
-          "Name": "IgnoreWords",
-          "DataFormat": "string",
-          "Sharing": "public"
-
-        }
-      ],
+      
       "Functions": [
         {
           "Name": "IndexContent",
