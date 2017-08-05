@@ -36,6 +36,7 @@ function anchor_type_create(anchor_type)
   var anchor_main_hash=getMainAchorHash();
   var new_anchorType= {Anchor_Type:anchor_type,Anchor_Text:""};
   var key=commit("anchor",new_anchorType);
+  debug("Anchor type "+anchor_type+" created with hash : "+key);
   commit("anchor_links",{Links:[{Base:anchor_main_hash,Link:key,Tag:"Anchor_Type"}]});
   var anctyplnk= getLink(anchor_main_hash,"Anchor_Type",{Load:true});
   return anctyplnk.Links[0].H;
@@ -44,19 +45,21 @@ function anchor_type_create(anchor_type)
 function anchor_create(new_anchor)
 {
   var new_anchorHash=commit("anchor",new_anchor);
-  debug("Indexing content : "+new_anchor.Anchor_Text+" for keyword : "+new_anchor.Anchor_Type);
+  debug("Creating anchor with text : "+new_anchor.Anchor_Text+" and type : "+new_anchor.Anchor_Type);
   var anchorTypeHash = getAnchorTypeHash(new_anchor.Anchor_Type);
+  debug("Got anchor type hash : "+anchorTypeHash);
+  //var lnk1 = commit("anchor_links",{Links:[{Base:anchorTypeHash,Link:new_anchorHash,Tag:"Anchor_Text"}]});
   anchor_link(anchorTypeHash,new_anchorHash);
-  var lnk = getLink(anchorTypeHash,"Anchor_Text",{Load:true});
+  //var lnk = getLink(anchorTypeHash,"Anchor_Text",{Load:true});
+  var lnk = doGetLinkLoad(anchorTypeHash,"Anchor_Text");
   debug("Anchor created : ");
   debug(lnk);
-  return lnk.Links[0].H;
+  return lnk;
 }
 
 function anchor_link(anchor_type,anchor_text)
 {
   commit("anchor_links",{Links:[{Base:anchor_type,Link:anchor_text,Tag:"Anchor_Text"}]});
-
 }
 
 function anchor_update(updateText)
@@ -114,55 +117,17 @@ function anchor_type_list()
 
 function anchor_list(anchorType)
 {
-  var anchor_text_list=[];
-  var anchor_hash_list=[];
 
   anchor_type_hash=getAnchorTypeHash(anchorType);
-  //var anchorList = getLink(anchor_type_hash,"Anchor_Text",{Load:true});
+  debug("Anchor type hash :"+anchor_type_hash);
+
 
   var anchorList=doGetLinkLoad(anchor_type_hash,"Anchor_Text");
-  //debug("Anchor list : ");
-  //debug(anchorList);
-  //debug("Returning from anchor list function : ");
-  //debug(anchorList.length);
-/*
-  for(var j=0;j<anchorList.length;j++)
-  {
-    //debug("in for loop");
-    debug("typeof anchorlist: "+typeof anchorList);
-    var ser = JSON.stringify(anchorList);
-    debug("typeof Serialized object : "+typeof ser);
-    var temp = anchorList[j].Anchor_Text;
-    debug("typeof temp : "+typeof temp)
-    // var parsed = JSON.parse(temp);
-    //debug(parsed.Anchor_Text);
-    /*if(j!=0)
-    var toPush = "AT_"+parsed.Anchor_Text;
-    else {
-      var toPush = parsed.Anchor_Text;
-    }
-    //debug(toPush);
-    //anchor_text_list.push(parsed.Anchor_Text);
-    anchor_text_list.push(temp)
-  }*/
+
 
 var ser = JSON.stringify(anchorList);
-  /*for(var j=0;j<anchorList.Links.length;j++)
-  {
-    debug("Inside for");
-    var temp = anchorList.Links[j].E;
-    var contentHash = anchorList.Links[j].H;
 
-    var begin = temp.indexOf('Anchor_Text');
-    var end = temp.indexOf('Anchor_Type');
 
-    var sub = temp.substr(begin+14,end-19);
-    debug("Extracted anchor text  :"+sub);
-    anchor_text_list.push(sub);
-    anchor_hash_list.push(contentHash);
-
-  }*/
-  //debug(anchor_text_list.length);
   return ser;
 }
 /*****
@@ -170,7 +135,10 @@ var ser = JSON.stringify(anchorList);
 // helper function to do getLink call, handle the no-link error case, and copy the returned entry values into a nicer array
 function doGetLinkLoad(base, tag) {
     // get the tag from the base in the DHT
+    debug("in doGetLinkLoad :");
     var links = getLink(base, tag,{Load:true});
+    debug("Links : ");
+    debug(links);
     if (isErr(links)) {
         links = [];
     } else {

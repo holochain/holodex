@@ -9,5 +9,55 @@
       "Exposure":"public",
       "Err": "",
       "Regexp": ""
+  },
+  {
+      "Convey":"Checking that the bridgeGenesis function is adding the current node to index nodes list.",
+      "Zome": "consumerApp",
+      "FnName": "bridgeGenesis",
+      "Input" : "true",
+      "Output": "QmZTmtGAYoTS3VZvVWkpwumabfDiAbJJG2ypc7tCbxpCdi",
+      "Exposure":"public",
+      "Err": "",
+      "Regexp": ""
+  },
+  {
+      "Convey":"Checking that the select index function selects itself when the current node is index node.",
+      "Zome": "consumerApp",
+      "FnName": "selectIndexNode",
+      "Input" : "%r1%",
+      "Output": "QmcPA2FNX93upt1YZhUH8eC1JWjvrKqFrty8P43ifRJ5tR",
+      "Exposure":"public",
+      "Err": "",
+      "Regexp": ""
+  },
+  {
+      "Convey":"Checking send receive for indexing function .",
+      "Zome": "consumerApp",
+      "FnName": "indexObject",
+      "Input" : {"content":"holodex : We are Indexing this content using holodex app. this","details":"can include timestamp, etc."},
+      "Output": "\"\\\"QmYZEj5N2zMuVBATP8cVSHAtF5an8VE4YZVcPsnLATPmbG\\\"\"",
+      "Exposure":"public",
+      "Err": "",
+      "Regexp": ""
+  },
+  {
+      "Convey":"Checking send receive for indexing function .",
+      "Zome": "consumerApp",
+      "FnName": "indexObject",
+      "Input" : {"content":"holodex can also be used for searching keywords","details":"can include timestamp,lication, etc."},
+      "Output": "\"\\\"QmNTFhCuQhUQPCverEff4zFr6b54FgLnrnBuGWyGfYaofV\\\"\"",
+      "Exposure":"public",
+      "Err": "",
+      "Regexp": ""
+  },
+  {
+      "Convey":"Checking send receive for search function .",
+      "Zome": "consumerApp",
+      "FnName": "searchContent",
+      "Input" : "holodex,We are searching:here,holodex",
+      "Output": "[\"QmNTFhCuQhUQPCverEff4zFr6b54FgLnrnBuGWyGfYaofV\",\"QmYZEj5N2zMuVBATP8cVSHAtF5an8VE4YZVcPsnLATPmbG\"]",
+      "Exposure":"public",
+      "Err": "",
+      "Regexp": ""
   }
 ]

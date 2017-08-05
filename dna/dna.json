@@ -26,7 +26,12 @@
       "Entries": [
         {
             "Name": "VolunteerNode",
-            "DataFormat": "boolean",
+            "DataFormat": "string",
+            "Sharing": "public"
+        },
+        {
+            "Name": "volunteer_link",
+            "DataFormat": "links",
             "Sharing": "public"
         },
         {
@@ -48,12 +53,12 @@
         },
         {
           "Name": "searchContent",
-          "CallingType": "json",
+          "CallingType": "string",
           "Exposure": "public"
         },
         {
           "Name": "bridgeGenesis",
-          "CallingType": "boolean",
+          "CallingType": "string",
           "Exposure": "public"
         },
         {
