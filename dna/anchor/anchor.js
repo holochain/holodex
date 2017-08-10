@@ -3,6 +3,11 @@ function genesis() {
   return true;
 }
 
+function bridgeGenesis()
+{
+  return true;
+}
+
 //USED IN GENESIS TO AN THE INITIAL ANCHOR
 
 function getMainAchorHash()
