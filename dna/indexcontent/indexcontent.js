@@ -5,32 +5,12 @@ function genesis(){
   //Calling addAnchor function for creating the base anchor
   baseAnchorHash = call("anchor","addAnchor","");
   debug("Base anchor added with hash - "+baseAnchorHash);
-
-  /*var ContentToIndex1 = {content:"holodex : We are Indexing this content using holodex app. this",details:"can include timestamp, etc."};
-  ContentToIndexhash1 = makeHash(ContentToIndex1);
-  var ContentToIndex2 = {content:"holodex can also be used for searching keywords",details:"can include timestamp,lication, etc."};
-  ContentToIndexhash2 = makeHash(ContentToIndex2);
-
-  IndexContent(ContentToIndex1.content,ContentToIndexhash1,"English");
-  IndexContent(ContentToIndex2.content,ContentToIndexhash2,"English");*/
 }
 
 function bridgeGenesis()
 {
+  debug("Wroking bridgeGenesis on To side");
   return true;
-}
-
-function receive(input, msg)
-{
-  if(msg.type == "createIndex")
-  {
-    var retVal = IndexContent(msg.content,msg.hashOfObject,msg.language);
-  }
-  else if(msg.type == "searchKeywords")
-  {
-    var retVal = searchKeywords(msg.searchString);
-  }
-  return retVal;
 }
 
 //Function called by the HC app to search for a string of words and get all the objects indexed for the words.
@@ -38,8 +18,9 @@ function searchKeywords(searchString)
 {
   var searchArr = searchString.split(/,| |:|-/);
   var i = searchArr.length;
-  var mergedList = [];
+  var mergedList = {};
   var list = [];
+  var listH = {};
 
   i--;
 
@@ -55,52 +36,40 @@ function searchKeywords(searchString)
     {
       var temp1 = JSON.parse(temp[m].Anchor_Text);
       debug(temp1.Anchor_Text);
-      mergedList=union(mergedList,temp1.Anchor_Text);
+      listH[temp1.Anchor_Text] = true;
+      mergedList=union(mergedList,listH);
     }
 
     i--;
   }
-  var jsonmer = JSON.parse(JSON.stringify(mergedList));
+
+  var jsonmer = Object.keys(mergedList);
 
   return jsonmer;
 }
 
 //To provide a list of all the objects that are indexed against the search string
-function union(mergedList,list)
+
+function union(mergedList,listH)
+
 {
+  var listKeys = Object.keys(listH);
 
-  if(mergedList.length==0)
-  {
-    if(list != "")
-      mergedList.push(list);
-  }
-  else
-  {
-    check=find(mergedList,list);
 
-    if(check==false)
+  debug(listKeys);
+  for (var i=0;i<listKeys.length;i++)
+  {
+if(mergedList[listKeys[i] == true])
+
     {
-      if(list != "")
-      mergedList.push(list);
+      debug("Already added to merged !");
+    }
+    else {
+      mergedList[listKeys[i]] = true;
     }
   }
   debug(mergedList);
   return mergedList;
-}
-
-//Function to check if the object has already been covered in the merged list
-function find(mainArr, check)
-{
-
-  for(i=0;i<=mainArr.length;i++)
-  {
-
-    if(mainArr[i] == check)
-    {
-      return true;
-    }
-  }
-  return false;
 }
 
 //Index content function is called from a HC application by passing the content and the hash of the object so that the link cant be
@@ -174,8 +143,6 @@ function getkeyword(keyword,hashOfObject)
   var kahash = makeHash(keywordAnchor);
 
   var sources = get(kahash,{GetMask:HC.GetMask.Suorces});
-  //debug("Get keyword function : ")
-  //debug(sources);
 
   return sources;
 }
@@ -183,31 +150,41 @@ function getkeyword(keyword,hashOfObject)
 //This is the list of common words(stop words) which do not need to Indexed for search. This list needs to be enhanced to cover all
 //possible ignore words
 function getIgnoreWords(language)
+
 {
   var IWreturn = {};
+  debug("Entered IW return function !")
+  IWreturn = loadIW(language);
 
-  IWreturn['English'] = getEnglishIW();
-
-  return IWreturn['English'];
+  return IWreturn;
 }
 
-function getEnglishIW()
+function loadIW(language)
 {
-  var EnglishIgnoreWords = {};
+  debug("Inside load IW !");
+  var ignoreList = loadignoreWords(language);
+  debug("Value of variable ignoreList is : "+ignoreList);
+  var ignoreListarr = ignoreList.split(" ");
+  var IgnoreWords = {};
 
-  EnglishIgnoreWords['this'] = true;
-  EnglishIgnoreWords['This'] = true;
-  EnglishIgnoreWords['the'] = true;
-  EnglishIgnoreWords['is'] = true;
-  EnglishIgnoreWords['a'] = true;
-  EnglishIgnoreWords['an'] = true;
-  EnglishIgnoreWords['are'] = true;
-  EnglishIgnoreWords['and'] = true;
-  EnglishIgnoreWords['to'] = true;
-  EnglishIgnoreWords['be'] = true;
-  EnglishIgnoreWords['we'] = true;
-  EnglishIgnoreWords[':'] = true;
-  EnglishIgnoreWords['-'] = true;
+  for(var i=0; i<ignoreListarr.length;i++)
+  {
+    IgnoreWords[ignoreListarr[i]] = true;
+  }
+  return IgnoreWords;
+}
 
-  return EnglishIgnoreWords;
+function loadignoreWords(language)
+{
+
+  if(language == "English")
+    ignoreList = "this This the is a an are and to be we : -";
+  else if(language == "Hindi")
+    ignoreList = "ये हिंदी उपेक्षा शब्द हैं";
+  else if(language == German)
+    ignoreList = "Diese sind Deutsch ignorieren Worte";
+  else if(language == Japanese)
+    ignoreList = "これらは日本語を無視する";
+
+return ignoreList;
 }

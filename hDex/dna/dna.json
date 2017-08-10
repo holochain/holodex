@@ -1,0 +1,59 @@
+{
+    "Version": 1,
+    "UUID": "2c9cb3ab-7ded-11e7-99b2-08002781aba8",
+    "Name": "templateApp",
+    "Properties": {
+        "description": "provides an application template",
+        "language": "en"
+    },
+    "PropertiesSchemaFile": "properties_schema.json",
+    "BasedOn": {
+        "H": null
+    },
+    "Zomes": [
+        {
+            "Name": "testZome",
+            "Description": "provide an template zome",
+            "CodeFile": "testZome.js",
+            "Entries": [
+                {
+                    "Name": "testEntry",
+                    "DataFormat": "json",
+                    "Schema": "",
+                    "SchemaFile": "",
+                    "Sharing": "public"
+                }
+            ],
+            "RibosomeType": "js",
+            "Functions": [
+                {
+                    "Name": "testEntryCreate",
+                    "CallingType": "json",
+                    "Exposure": "public"
+                },
+                {
+                    "Name": "testEntryRead",
+                    "CallingType": "json",
+                    "Exposure": "public"
+                },
+                {
+                    "Name": "doTestAction",
+                    "CallingType": "json",
+                    "Exposure": "public"
+                }
+            ],
+            "BridgeFuncs": null,
+            "BridgeTo": {
+                "H": null
+            }
+        }
+    ],
+    "RequiresVersion": 0,
+    "DHTConfig": {
+        "HashType": "sha2-256"
+    },
+    "Progenitor": {
+        "Identity": "",
+        "PubKey": null
+    }
+}
