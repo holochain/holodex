@@ -18,6 +18,61 @@
       "H": null
   },
   "Zomes": [
+    {
+      "Name": "consumerApp",
+      "Description": "Zome dealing with functions relating to node to node communication and selection for index nodes",
+      "RibosomeType": "js",
+      "CodeFile": "consumerApp.js",
+      "Entries": [
+        {
+            "Name": "VolunteerNode",
+            "DataFormat": "string",
+            "Sharing": "public"
+        },
+        {
+            "Name": "volunteer_link",
+            "DataFormat": "links",
+            "Sharing": "public"
+        },
+        {
+        "Name": "Node4ForTest",
+        "DataFormat": "string",
+        "Sharing": "public"
+        }
+      ],
+      "Functions": [
+        {
+          "Name": "selectIndexNode",
+          "CallingType": "string",
+          "Exposure": "public"
+        },
+        {
+          "Name": "indexObject",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "searchContent",
+          "CallingType": "string",
+          "Exposure": "public"
+        },
+        {
+          "Name": "bridgeGenesis",
+          "CallingType": "string",
+          "Exposure": "public"
+        },
+        {
+          "Name": "createObject1ForTest",
+          "CallingType": "string",
+          "Exposure": "public"
+        },
+        {
+          "Name": "createObject2ForTest",
+          "CallingType": "string",
+          "Exposure": "public"
+        }
+      ]
+    },
   {
       "Name": "anchor",
       "Description": "Anchor zome",
