@@ -127,7 +127,7 @@ function IndexContent(msgObj)
 
               var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:msgObj.hashOfObject};
 
-              var checkexist = getkeyword(keywords[i],msgobj.hashOfObject);
+              var checkexist = getkeyword(keywords[i],msgObj.hashOfObject);
 
                 if(checkexist.C != JSON.stringify(IndexContentByKeyword)){
 
@@ -146,7 +146,7 @@ function IndexContent(msgObj)
   var lnk= call("anchor","anchor_type_list","");
   var strlnk = lnk.toString();
   debug("Object indexed for keywords : "+strlnk);
-  return msg.hashOfObject;
+  return msgObj.hashOfObject;
 
 }
 
