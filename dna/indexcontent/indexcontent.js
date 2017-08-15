@@ -89,13 +89,14 @@ if(mergedList[listKeys[i] == true])
 
 //Index content function is called from a HC application by passing the content and the hash of the object so that the link cant be
 //made directly to the object.
-function IndexContent(content,hashOfObject,language)
+//function IndexContent(content,hashOfObject,language)
+function IndexContent(msgObj)
 {
 
 
-  var HTIgnoreWords = getIgnoreWords(language);
+  var HTIgnoreWords = getIgnoreWords(msgObj.language);
 
-  var keywords=content.split(" ");
+  var keywords=msgObj.content.split(" ");
   var i = keywords.length;
 
   i--;
@@ -116,7 +117,7 @@ function IndexContent(content,hashOfObject,language)
             {
 
               call("anchor","anchor_type_create",keywords[i]);
-              var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:hashOfObject};
+              var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:msgObj.hashOfObject};
               call("anchor","anchor_create",IndexContentByKeyword);
               debug("Index created for - "+keywords[i]);
 
@@ -124,9 +125,9 @@ function IndexContent(content,hashOfObject,language)
             else {                                              //Else, only create the anchor for content and link content(object)
                                                                 //to keyword
 
-              var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:hashOfObject};
+              var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:msgObj.hashOfObject};
 
-              var checkexist = getkeyword(keywords[i],hashOfObject);
+              var checkexist = getkeyword(keywords[i],msgobj.hashOfObject);
 
                 if(checkexist.C != JSON.stringify(IndexContentByKeyword)){
 
@@ -145,7 +146,7 @@ function IndexContent(content,hashOfObject,language)
   var lnk= call("anchor","anchor_type_list","");
   var strlnk = lnk.toString();
   debug("Object indexed for keywords : "+strlnk);
-  return hashOfObject;
+  return msg.hashOfObject;
 
 }
 
@@ -196,9 +197,9 @@ function loadignoreWords(language)
     ignoreList = "this This the is a an are and to be we : -";
   else if(language == "Hindi")
     ignoreList = "ये हिंदी उपेक्षा शब्द हैं";
-  else if(language == German)
+  else if(language == "German")
     ignoreList = "Diese sind Deutsch ignorieren Worte";
-  else if(language == Japanese)
+  else if(language == "Japanese")
     ignoreList = "これらは日本語を無視する";
 
 return ignoreList;
