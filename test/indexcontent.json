@@ -1,21 +1,12 @@
 [
 
-  {
-      "Convey":"Checking the result for the search function for a string of words. The search should return the list of content/s which have any of the keywords",
-      "Zome": "indexcontent",
-      "FnName": "searchKeywords",
-      "Input" : "holodex,We are searching:here,holodex",
-      "Output": "QmNTFhCuQhUQPCverEff4zFr6b54FgLnrnBuGWyGfYaofV,QmYZEj5N2zMuVBATP8cVSHAtF5an8VE4YZVcPsnLATPmbG",
-      "Exposure":"public",
-      "Err": "",
-      "Regexp": ""
-  },
+
   {
       "Convey":"Checking that the bridgeGenesis function is adding the current node to index nodes list.",
       "Zome": "consumerApp",
       "FnName": "bridgeGenesis",
       "Input" : "true",
-      "Output": "QmZTmtGAYoTS3VZvVWkpwumabfDiAbJJG2ypc7tCbxpCdi",
+      "Output": "true",
       "Exposure":"public",
       "Err": "",
       "Regexp": ""
@@ -60,4 +51,6 @@
       "Err": "",
       "Regexp": ""
   }
+
+
 ]

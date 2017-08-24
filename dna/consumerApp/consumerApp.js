@@ -38,13 +38,13 @@ function bridgeGenesis(VolunteerForIndex)                     //Volunteering Rat
     }
     var ret = JSON.parse(lnk);
     debug(ret[0]);
-    return VolunteerNode;
+    return true;
   }
   else
   {
     var VolunteerNode = commit("VolunteerNode",VolunteerForIndex);
     commit("volunteer_link",{Links:[{Base:App.Key.Hash,Link:VolunteerNode,Tag:"VolunteerNode"}]});
-    return VolunteerNode;
+    return false;
   }
 }
 
