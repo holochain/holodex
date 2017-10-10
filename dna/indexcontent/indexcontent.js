@@ -156,7 +156,7 @@ function getkeyword(keyword,hashOfObject)
   var keywordAnchor = {Anchor_Type:keyword,Anchor_Text:hashOfObject};
 
   debug(keywordAnchor);
-  var kahash = makeHash(keywordAnchor);
+  var kahash = makeHash("anchor",keywordAnchor);
 
   var sources = get(kahash,{GetMask:HC.GetMask.Suorces});
 

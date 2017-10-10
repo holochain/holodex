@@ -13,14 +13,14 @@ function bridgeGenesis()
 function getMainAchorHash()
 {
   var anchorMain = {Anchor_Type:"Anchor_Type",Anchor_Text:""};
-  var hashAnchorMain = makeHash(anchorMain);
+  var hashAnchorMain = makeHash("anchor",anchorMain);
   return hashAnchorMain;
 }
 
 function getAnchorTypeHash(anchor_type)
 {
   var anchorType = {Anchor_Type:anchor_type,Anchor_Text:""};
-  var anchorTypeHash = makeHash(anchorType);
+  var anchorTypeHash = makeHash("anchor",anchorType);
   return anchorTypeHash;
 }
 function addAnchor()
@@ -30,9 +30,9 @@ function addAnchor()
   var anchor_main_hash=commit("anchor",anchor_main);
   //debug("Entered addAnchor - main hash - "+anchor_main_hash);
   commit("anchor_links", {Links:[{Base:dna,Link:anchor_main_hash,Tag:"Anchor"}]});
-  var lnk = getLink(dna,"Anchor",{Load : true});
+  var lnk = getLinks(dna,"Anchor",{Load : true});
   //debug("Main anchor hash on link - "+lnk);
-  return lnk.Links[0].H;
+  return lnk[0].Hash;
 }
 
 //USED TO CREATE A NEW Anchor_Type
@@ -43,8 +43,8 @@ function anchor_type_create(anchor_type)
   var key=commit("anchor",new_anchorType);
   debug("Anchor type "+anchor_type+" created with hash : "+key);
   commit("anchor_links",{Links:[{Base:anchor_main_hash,Link:key,Tag:"Anchor_Type"}]});
-  var anctyplnk= getLink(anchor_main_hash,"Anchor_Type",{Load:true});
-  return anctyplnk.Links[0].H;
+  var anctyplnk= getLinks(anchor_main_hash,"Anchor_Type",{Load:true});
+  return anctyplnk[0].Hash;
 }
 
 function anchor_create(new_anchor)
@@ -74,10 +74,10 @@ function anchor_update(updateText)
   var new_anchorText = updateText.new_anchorText;
 
   var oldAnchor={Anchor_Type:anchor_type,Anchor_Text:old_anchorText};
-  var oldAnchorHash = makeHash(oldAnchor);
+  var oldAnchorHash = makeHash("anchor",oldAnchor);
 
   var newAnchor={Anchor_Type:anchor_type,Anchor_Text:new_anchorText};
-  var newAnchorHash = makeHash(newAnchor);
+  var newAnchorHash = makeHash("anchor",newAnchor);
 
   var anchorTypeHash = getAnchorTypeHash(anchor_type);
 
@@ -88,7 +88,7 @@ function anchor_update(updateText)
 
   anchor_updatelink(anchorTypeHash,oldAnchorHash,newAnchorHash);
 
-  var updcheck = getLink(anchorTypeHash,"Anchor_Text",{Load:true});
+  var updcheck = getLinks(anchorTypeHash,"Anchor_Text",{Load:true});
   return updcheck;
 }
 
@@ -141,18 +141,16 @@ var ser = JSON.stringify(anchorList);
 function doGetLinkLoad(base, tag) {
     // get the tag from the base in the DHT
     debug("in doGetLinkLoad :");
-    var links = getLink(base, tag,{Load:true});
+    var links = getLinks(base, tag,{Load:true});
     debug("Links : ");
     debug(links);
     if (isErr(links)) {
         links = [];
-    } else {
-        links = links.Links;
     }
     var links_filled = [];
     for (var i=0;i <links.length;i++) {
-        var link = {H:links[i].H};
-        link[tag] = links[i].E;
+        var link = {H:links[i].Hash};
+        link[tag] = links[i].Entry;
         links_filled.push(link);
     }
     debug("Links Filled:"+JSON.stringify(links_filled));

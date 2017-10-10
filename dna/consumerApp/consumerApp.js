@@ -18,7 +18,7 @@ function bridgeGenesis(VolunteerForIndex)                     //Volunteering Rat
 
     var anchorMain = {Anchor_Type:"Anchor_Type",Anchor_Text:""};
 
-    var amhash = makeHash(anchorMain);
+    var amhash = makeHash("anchor",anchorMain);
 
     var checkexist = get(amhash,{GetMask:HC.GetMask.Suorces});
     debug("Checkexist : "+checkexist.C);
@@ -51,10 +51,10 @@ function bridgeGenesis(VolunteerForIndex)                     //Volunteering Rat
 function selectIndexNode()
 {
 
-  var VolunteerNodeH = getLink(App.Key.Hash,"VolunteerNode",{Load:true});
-  debug("Volunteer node value :"+VolunteerNodeH.Links[0].E)
+  var VolunteerNodeH = getLinks(App.Key.Hash,"VolunteerNode",{Load:true});
+  debug("Volunteer node value :"+VolunteerNodeH[0].Entry)
 
-  if(VolunteerNodeH.Links[0].E == "true")
+  if(VolunteerNodeH[0].Entry == "true")
   {
     var key = App.Key.Hash;
   }
@@ -76,22 +76,24 @@ function selectIndexNode()
 function createObject1ForTest()
 {
   var ContentToIndex1 = {content:"holodex : We are Indexing this content using holodex app. this",details:"can include timestamp, etc."};
-  ContentToIndexhash1 = makeHash(ContentToIndex1);
+  ContentToIndexhash1 = makeHash("searchContent",ContentToIndex1);
   return ContentToIndexhash1;
 }
 
 function createObject2ForTest()
 {
   var ContentToIndex2 = {content:"holodex can also be used for searching keywords",details:"can include timestamp,lication, etc."};
-  ContentToIndexhash2 = makeHash(ContentToIndex2);
+  ContentToIndexhash2 = makeHash("searchContent",ContentToIndex2);
   return ContentToIndexhash1;
 }
 
 function indexObject(object)
 {
   var indexNode = selectIndexNode();
-  debug("Selected index node : "+indexNode);
-  var objHash = makeHash(object);
+    debug("Selected index node : "+indexNode);
+    //TODO: this is broken because we actually need to know the type of the object before hashing it
+    //      using "anchor" for now because it's the only json type entry def we have.
+  var objHash = makeHash("anchor",object);
   debug("Hash of object : "+objHash);
 
   var createIndex = send(indexNode,{type:"createIndex",content:object.content,hashOfObject:objHash,language:"English"})
@@ -175,11 +177,11 @@ function searchKeywords(searchString)
     debug(searchArr[i]);
     list = call("anchor","anchor_list",searchArr[i]);
 
-    var temp = JSON.parse(list);
+    var temp = list;
     debug(list);
     for(var m=0;m<temp.length;m++)
     {
-      var temp1 = JSON.parse(temp[m].Anchor_Text);
+      var temp1 = temp[m].Anchor_Text;
       debug(temp1.Anchor_Text);
       mergedList=union(mergedList,temp1.Anchor_Text);
     }
@@ -297,7 +299,7 @@ function getkeyword(keyword,hashOfObject)
   var keywordAnchor = {Anchor_Type:keyword,Anchor_Text:hashOfObject};
 
   debug(keywordAnchor);
-  var kahash = makeHash(keywordAnchor);
+  var kahash = makeHash("anchor",keywordAnchor);
 
   var sources = get(kahash,{GetMask:HC.GetMask.Suorces});
   //debug("Get keyword function : ")

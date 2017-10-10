@@ -1,9 +1,8 @@
 {
-  "scaffoldVersion": "0.0.1",
-  "generator": "hc-scaffold:0.0.2+afbc120",
   "Version": 1,
   "UUID": "2ef9fa48-2a33-424f-a4bf-b0591b2a71d8",
   "Name": "holodex",
+  "RequiresVersion": 17,
 
   "Properties": {
     "description": "A pluggable app for other holochain based apps for enabling indexing",
