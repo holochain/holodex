@@ -6,10 +6,10 @@ function genesis(){
 
   var ContentToIndex1 = {content:"holodex : We are Indexing this content using holodex app. this",details:"can include timestamp, etc."};
 
-  ContentToIndexhash1 = makeHash(ContentToIndex1);
+    ContentToIndexhash1 = makeHash("anchor",ContentToIndex1);
 
   var ContentToIndex2 = {content:"holodex can also be used for searching keywords",details:"can include timestamp,lication, etc."};
-  ContentToIndexhash2 = makeHash(ContentToIndex2);
+    ContentToIndexhash2 = makeHash("anchor",ContentToIndex2);
 
 
 
@@ -17,7 +17,7 @@ function genesis(){
   //using holodex
   IndexContent(ContentToIndex1.content,ContentToIndexhash1,"English");
   IndexContent(ContentToIndex2.content,ContentToIndexhash2,"English");
-
+    return true;
 }
 
 //Function called by the HC app to search for a string of words and get all the objects indexed for the words.
@@ -151,7 +151,7 @@ function getkeyword(keyword,hashOfObject)
   var keywordAnchor = {Anchor_Type:keyword,Anchor_Text:hashOfObject};
 
   debug(keywordAnchor);
-  var kahash = makeHash(keywordAnchor);
+    var kahash = makeHash("anchor",keywordAnchor);
 
   var sources = get(kahash,{GetMask:HC.GetMask.Suorces});
 
