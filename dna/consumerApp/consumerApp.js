@@ -18,16 +18,18 @@ function bridgeGenesis(VolunteerForIndex)                     //Volunteering Rat
 
     var anchorMain = {Anchor_Type:"Anchor_Type",Anchor_Text:""};
 
-    var amhash = makeHash(anchorMain);
-
-    var checkexist = get(amhash,{GetMask:HC.GetMask.Suorces});
-    debug("Checkexist : "+checkexist.C);
-    if(checkexist.C = JSON.stringify(anchorMain)){
+    var amhash = makeHash("anchor",anchorMain);
+    var samhash = amhash.toString();
+    //debug(samhash);
+    //var checkexist = get(samhash,{GetMask:HC.GetMask.Sources});
+    var checkexist = get(samhash);
+    //debug("Checkexist : "+checkexist);
+    if(checkexist == JSON.stringify(anchorMain)){
 
       debug("Creating anchor type IndexNodes");
       //var IndexNodeAnchorType = {Anchor_Type:"IndexNodes",Anchor_Text:""};
-      call("anchor","anchor_type_create","IndexNodes");
-
+      var indN = call("anchor","anchor_type_create","IndexNodes");
+      debug("Index node added successfully with hash : "+indN);
       debug("Adding self to index nodes ... "+App.Key.Hash);
        var lnk = call("anchor","anchor_create",addSelfAsAnchor);
 

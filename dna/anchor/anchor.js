@@ -13,7 +13,8 @@ function bridgeGenesis()
 function getMainAchorHash()
 {
   var anchorMain = {Anchor_Type:"Anchor_Type",Anchor_Text:""};
-  var hashAnchorMain = makeHash(anchorMain);
+  var hashAnchorMain = makeHash("anchor",anchorMain);
+  //debug("get Main Achor hash Function : ------"+hashAnchorMain);
   return hashAnchorMain;
 }
 
@@ -28,27 +29,31 @@ function addAnchor()
   var dna = App.DNA.Hash;
   var anchor_main = {Anchor_Type:"Anchor_Type",Anchor_Text:""};
   var anchor_main_hash=commit("anchor",anchor_main);
-  //debug("Entered addAnchor - main hash - "+anchor_main_hash);
+  debug("Entered addAnchor - main hash - "+anchor_main_hash);
   commit("anchor_links", {Links:[{Base:dna,Link:anchor_main_hash,Tag:"Anchor"}]});
-  var lnk = getLink(dna,"Anchor",{Load : true});
-  //debug("Main anchor hash on link - "+lnk);
-  return lnk.Links[0].H;
+  var lnk = getLinks(dna,"Anchor",{Load : true});
+  //var lnk = get(anchor_main_hash);
+  //debug("Main anchor hash on link - "+lnk[0]["Hash"]);
+  //return lnk.Links[0].H;
+  return lnk[0]["Hash"];
 }
 
 //USED TO CREATE A NEW Anchor_Type
 function anchor_type_create(anchor_type)
 {
   var anchor_main_hash=getMainAchorHash();
+  debug("Main Ancor hash : "+anchor_main_hash);
   var new_anchorType= {Anchor_Type:anchor_type,Anchor_Text:""};
   var key=commit("anchor",new_anchorType);
   debug("Anchor type "+anchor_type+" created with hash : "+key);
   commit("anchor_links",{Links:[{Base:anchor_main_hash,Link:key,Tag:"Anchor_Type"}]});
-  var anctyplnk= getLink(anchor_main_hash,"Anchor_Type",{Load:true});
-  return anctyplnk.Links[0].H;
+  var anctyplnk= getLinks(anchor_main_hash,"Anchor_Type",{Load:true});
+  return anctyplnk[0]["Hash"];
 }
 
 function anchor_create(new_anchor)
 {
+  //debug("New Anchor :"+new_anchor.Anchor_Type);
   var new_anchorHash=commit("anchor",new_anchor);
   debug("Creating anchor with text : "+new_anchor.Anchor_Text+" and type : "+new_anchor.Anchor_Type);
   var anchorTypeHash = getAnchorTypeHash(new_anchor.Anchor_Type);

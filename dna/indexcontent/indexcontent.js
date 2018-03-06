@@ -1,24 +1,20 @@
 function genesis(){
 
-
-
   //Calling addAnchor function for creating the base anchor
   baseAnchorHash = call("anchor","addAnchor","");
   debug("Base anchor added with hash - "+baseAnchorHash);
 
-  /*var ContentToIndex1 = {content:"holodex : We are Indexing this content using holodex app. this",details:"can include timestamp, etc."};
+  var ContentToIndex1 = {content:"holodex : We are Indexing this content using holodex app. this",details:"can include timestamp, etc."};
 
   ContentToIndexhash1 = makeHash(ContentToIndex1);
 
   var ContentToIndex2 = {content:"holodex can also be used for searching keywords",details:"can include timestamp,lication, etc."};
   ContentToIndexhash2 = makeHash(ContentToIndex2);
 
-
-
   //called in genesis temporarily. Once bridging between apps gets workig, index content will be called from the HC app that is
   //using holodex
-  IndexContent(ContentToIndex1.content,ContentToIndexhash1,"English");
-IndexContent(ContentToIndex2.content,ContentToIndexhash2,"English");*/
+  //IndexContent(ContentToIndex1.content,ContentToIndexhash1,"English");
+  //IndexContent(ContentToIndex2.content,ContentToIndexhash2,"English");
 return true;
 }
 
@@ -89,13 +85,16 @@ if(mergedList[listKeys[i] == true])
 
 //Index content function is called from a HC application by passing the content and the hash of the object so that the link cant be
 //made directly to the object.
-//function IndexContent(content,hashOfObject,language)
-function IndexContent(msgObj)
+function IndexContent(content,hashOfObject,language)
+//function IndexContent(msgObj)
 {
-
-
+  msgObj = {
+    content: content,
+    hashOfObject: hashOfObject,
+    language: language
+  };
   var HTIgnoreWords = getIgnoreWords(msgObj.language);
-
+  //debug(HTIgnoreWords);
   var keywords=msgObj.content.split(" ");
   var i = keywords.length;
 
@@ -117,6 +116,7 @@ function IndexContent(msgObj)
             {
 
               call("anchor","anchor_type_create",keywords[i]);
+              debug("Index Content Function : --------"+msgObj.hashOfObject);
               var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:msgObj.hashOfObject};
               call("anchor","anchor_create",IndexContentByKeyword);
               debug("Index created for - "+keywords[i]);
@@ -192,7 +192,7 @@ function loadIW(language)
 
 function loadignoreWords(language)
 {
-
+  var ignoreList = "";
   if(language == "English")
     ignoreList = "this This the is a an are and to be we : -";
   else if(language == "Hindi")
