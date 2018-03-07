@@ -16,7 +16,7 @@
         "Zome": "consumerApp",
         "FnName": "selectIndexNode",
         "Input" : "%r1%",
-        "Output": "QmcPA2FNX93upt1YZhUH8eC1JWjvrKqFrty8P43ifRJ5tR",
+        "Output": "QmdLmLgKxbHGt89ECUNFy2RNGxRzAYJheDdjZqJLgXguH2",
         "Exposure":"public",
         "Err": "",
         "Regexp": ""
@@ -26,7 +26,7 @@
         "Zome": "consumerApp",
         "FnName": "indexObject",
         "Input" : {"content":"holodex : We are Indexing this content using holodex app. this","details":"can include timestamp, etc."},
-        "Output": "\"\\\"QmYZEj5N2zMuVBATP8cVSHAtF5an8VE4YZVcPsnLATPmbG\\\"\"",
+        "Output": "\"QmYZEj5N2zMuVBATP8cVSHAtF5an8VE4YZVcPsnLATPmbG\"",
         "Exposure":"public",
         "Err": "",
         "Regexp": ""
@@ -36,7 +36,7 @@
         "Zome": "consumerApp",
         "FnName": "indexObject",
         "Input" : {"content":"holodex can also be used for searching keywords","details":"can include timestamp,lication, etc."},
-        "Output": "\"\\\"QmNTFhCuQhUQPCverEff4zFr6b54FgLnrnBuGWyGfYaofV\\\"\"",
+        "Output": "\"QmNTFhCuQhUQPCverEff4zFr6b54FgLnrnBuGWyGfYaofV\"",
         "Exposure":"public",
         "Err": "",
         "Regexp": ""

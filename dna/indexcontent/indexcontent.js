@@ -2,6 +2,7 @@ function genesis(){
 
   //Calling addAnchor function for creating the base anchor
   baseAnchorHash = call("anchor","addAnchor","");
+  debug("IndexContent genesis");
   debug("Base anchor added with hash - "+baseAnchorHash);
 
   var ContentToIndex1 = {content:"holodex : We are Indexing this content using holodex app. this",details:"can include timestamp, etc."};

@@ -9,27 +9,28 @@ function bridgeGenesis(VolunteerForIndex)                     //Volunteering Rat
 
   if(VolunteerForIndex == "true")
   {
-
-
     var VolunteerNode = commit("VolunteerNode",VolunteerForIndex);
     commit("volunteer_link",{Links:[{Base:App.Key.Hash,Link:VolunteerNode,Tag:"VolunteerNode"}]});
     debug("VolunteerNode :"+ VolunteerNode);
     var addSelfAsAnchor = {Anchor_Type:"IndexNodes",Anchor_Text:App.Key.Hash};
 
-    var anchorMain = {Anchor_Type:"Anchor_Type",Anchor_Text:""};
+    //var anchorMain = {Anchor_Type:"Anchor_Type",Anchor_Text:""};
+    var anchorMainIndex = {Anchor_Type:"IndexNodes",Anchor_Text:""};
 
-    var amhash = makeHash("anchor",anchorMain);
+    var amhash = makeHash("anchor",anchorMainIndex);
     var samhash = amhash.toString();
-    //debug(samhash);
+
     //var checkexist = get(samhash,{GetMask:HC.GetMask.Sources});
     var checkexist = get(samhash);
-    //debug("Checkexist : "+checkexist);
-    if(checkexist == JSON.stringify(anchorMain)){
+    debug("Checkexist : "+checkexist);
+    //debug("Checking for the HashNotFound Object "+HC.HashNotFound)
+    if(checkexist != JSON.stringify(anchorMainIndex)){
+    //if(checkexist == HC.HashNotFound){
 
       debug("Creating anchor type IndexNodes");
       //var IndexNodeAnchorType = {Anchor_Type:"IndexNodes",Anchor_Text:""};
       var indN = call("anchor","anchor_type_create","IndexNodes");
-      debug("Index node added successfully with hash : "+indN);
+      debug("Index node type added successfully with hash : "+indN);
       debug("Adding self to index nodes ... "+App.Key.Hash);
        var lnk = call("anchor","anchor_create",addSelfAsAnchor);
 
@@ -53,10 +54,10 @@ function bridgeGenesis(VolunteerForIndex)                     //Volunteering Rat
 function selectIndexNode()
 {
 
-  var VolunteerNodeH = getLink(App.Key.Hash,"VolunteerNode",{Load:true});
-  debug("Volunteer node value :"+VolunteerNodeH.Links[0].E)
+  var VolunteerNodeH = getLinks(App.Key.Hash,"VolunteerNode",{Load:true});
+  debug("Volunteer node value :"+VolunteerNodeH[0]["Entry"])
 
-  if(VolunteerNodeH.Links[0].E == "true")
+  if(VolunteerNodeH[0]["Entry"] == "true")
   {
     var key = App.Key.Hash;
   }
@@ -78,14 +79,14 @@ function selectIndexNode()
 function createObject1ForTest()
 {
   var ContentToIndex1 = {content:"holodex : We are Indexing this content using holodex app. this",details:"can include timestamp, etc."};
-  ContentToIndexhash1 = makeHash(ContentToIndex1);
+  ContentToIndexhash1 = makeHash("anchor",ContentToIndex1);
   return ContentToIndexhash1;
 }
 
 function createObject2ForTest()
 {
   var ContentToIndex2 = {content:"holodex can also be used for searching keywords",details:"can include timestamp,lication, etc."};
-  ContentToIndexhash2 = makeHash(ContentToIndex2);
+  ContentToIndexhash2 = makeHash("anchor",ContentToIndex2);
   return ContentToIndexhash1;
 }
 
@@ -93,7 +94,7 @@ function indexObject(object)
 {
   var indexNode = selectIndexNode();
   debug("Selected index node : "+indexNode);
-  var objHash = makeHash(object);
+  var objHash = makeHash("anchor",object);
   debug("Hash of object : "+objHash);
 
   var createIndex = send(indexNode,{type:"createIndex",content:object.content,hashOfObject:objHash,language:"English"})
@@ -164,6 +165,7 @@ function receive(input, msg)
 //Function called by the HC app to search for a string of words and get all the objects indexed for the words.
 function searchKeywords(searchString)
 {
+
   var searchArr = searchString.split(/,| |:|-/);
   var i = searchArr.length;
   var mergedList = [];
@@ -181,9 +183,11 @@ function searchKeywords(searchString)
     debug(list);
     for(var m=0;m<temp.length;m++)
     {
-      var temp1 = JSON.parse(temp[m].Anchor_Text);
-      debug(temp1.Anchor_Text);
-      mergedList=union(mergedList,temp1.Anchor_Text);
+      debug("-----------In for loop : "+temp[m])
+      //var temp1 = JSON.parse(temp[m].Anchor_Text);
+      //debug(temp1.Anchor_Text);
+      //mergedList=union(mergedList,temp1.Anchor_Text);
+      mergedList=union(mergedList,temp[m]);
     }
 
     i--;
