@@ -22,7 +22,7 @@
         "Regexp": ""
     },
     {
-        "Convey":"Checking send receive for indexing function .",
+        "Convey":"Create index for obect 1",
         "Zome": "consumerApp",
         "FnName": "indexObject",
         "Input" : {"content":"holodex : We are Indexing this content using holodex app. this","details":"can include timestamp, etc."},
@@ -32,7 +32,7 @@
         "Regexp": ""
     },
     {
-        "Convey":"Checking send receive for indexing function .",
+        "Convey":"Create index for object 2",
         "Zome": "consumerApp",
         "FnName": "indexObject",
         "Input" : {"content":"holodex can also be used for searching keywords","details":"can include timestamp,lication, etc."},
@@ -42,11 +42,21 @@
         "Regexp": ""
     },
     {
-        "Convey":"Checking send receive for search function .",
+        "Convey":"Search function test for keywords existing in both objects",
         "Zome": "consumerApp",
         "FnName": "searchContent",
         "Input" : "holodex,We are searching:here,holodex",
         "Output": "[\"QmNTFhCuQhUQPCverEff4zFr6b54FgLnrnBuGWyGfYaofV\",\"QmYZEj5N2zMuVBATP8cVSHAtF5an8VE4YZVcPsnLATPmbG\"]",
+        "Exposure":"public",
+        "Err": "",
+        "Regexp": ""
+    },
+    {
+        "Convey":"Search function test for keywords existing in only one of the objects",
+        "Zome": "consumerApp",
+        "FnName": "searchContent",
+        "Input" : "content",
+        "Output": "[\"QmYZEj5N2zMuVBATP8cVSHAtF5an8VE4YZVcPsnLATPmbG\"]",
         "Exposure":"public",
         "Err": "",
         "Regexp": ""

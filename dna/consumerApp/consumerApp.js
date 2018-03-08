@@ -14,41 +14,38 @@ function bridgeGenesis(VolunteerForIndex)                     //Volunteering Rat
     debug("VolunteerNode :"+ VolunteerNode);
     var addSelfAsAnchor = {Anchor_Type:"IndexNodes",Anchor_Text:App.Key.Hash};
 
-    //var anchorMain = {Anchor_Type:"Anchor_Type",Anchor_Text:""};
+                                                                    //Checking if the Index Node anchor tyoe is created
     var anchorMainIndex = {Anchor_Type:"IndexNodes",Anchor_Text:""};
-
     var amhash = makeHash("anchor",anchorMainIndex);
-    var samhash = amhash.toString();
+    var checkexist = get(amhash,{GetMask:HC.GetMask.Sources});
 
-    //var checkexist = get(samhash,{GetMask:HC.GetMask.Sources});
-    var checkexist = get(samhash);
-    debug("Checkexist : "+checkexist);
-    //debug("Checking for the HashNotFound Object "+HC.HashNotFound)
-    if(checkexist != JSON.stringify(anchorMainIndex)){
-    //if(checkexist == HC.HashNotFound){
+    if(checkexist != JSON.stringify(anchorMainIndex)){           //If there are no index nodes(anhor type), create Index node tyoe
+    //if(checkexist == HC.HashNotFound){                         //and add self as IndexNodes
 
       debug("Creating anchor type IndexNodes");
-      //var IndexNodeAnchorType = {Anchor_Type:"IndexNodes",Anchor_Text:""};
+
       var indN = call("anchor","anchor_type_create","IndexNodes");
       debug("Index node type added successfully with hash : "+indN);
       debug("Adding self to index nodes ... "+App.Key.Hash);
        var lnk = call("anchor","anchor_create",addSelfAsAnchor);
 
     }
-    else {
+    else {                                                      //Else just add self as IndexNodes anchor
       debug("Adding self to index nodes ... "+App.Key.Hash);
         var lnk = call("anchor","anchor_create",addSelfAsAnchor);
     }
-    var ret = JSON.parse(lnk);
-    debug(ret[0]);
-    return true;
+
+    //var ret = JSON.parse(lnk);
+    //debug(ret[0]);
+
   }
-  else
+  return true;
+  /*else
   {
     var VolunteerNode = commit("VolunteerNode",VolunteerForIndex);
     commit("volunteer_link",{Links:[{Base:App.Key.Hash,Link:VolunteerNode,Tag:"VolunteerNode"}]});
     return false;
-  }
+  }*/
 }
 
 function selectIndexNode()
@@ -155,7 +152,7 @@ function receive(input, msg)
   }
   else if(msg.type == "searchKeywords")
   {
-    debug("Searching for the string :::::: "+msg.searchString);
+    debug("\nSearching for the string :::::: "+msg.searchString);
     var retVal = searchKeywords(msg.searchString);
 
   }
@@ -175,15 +172,14 @@ function searchKeywords(searchString)
 
   while(i>=0)
   {
-
-    debug(searchArr[i]);
+    debug("\nComputing for keyword : "+searchArr[i]);
     list = call("anchor","anchor_list",searchArr[i]);
 
     var temp = JSON.parse(list);
-    debug(list);
+    //debug(list);
     for(var m=0;m<temp.length;m++)
     {
-      debug("-----------In for loop : "+temp[m])
+      //debug("-----------In for loop : "+temp[m])
       //var temp1 = JSON.parse(temp[m].Anchor_Text);
       //debug(temp1.Anchor_Text);
       //mergedList=union(mergedList,temp1.Anchor_Text);
@@ -192,9 +188,10 @@ function searchKeywords(searchString)
 
     i--;
   }
-  var jsonmer = JSON.parse(JSON.stringify(mergedList));
+  //var jsonmer = JSON.parse(JSON.stringify(mergedList));
+  debug("\nSearched words exist in above objects !");
 
-  return jsonmer;
+  return mergedList;
 }
 
 //To provide a list of all the objects that are indexed against the search string
@@ -216,7 +213,7 @@ function union(mergedList,list)
       mergedList.push(list);
     }
   }
-  debug(mergedList);
+  //debug(mergedList);
   return mergedList;
 }
 
@@ -239,8 +236,6 @@ function find(mainArr, check)
 //made directly to the object.
 function IndexContent(content,hashOfObject,language)
 {
-
-
   var HTIgnoreWords = getIgnoreWords(language);
 
   var keywords=content.split(" ");
@@ -249,20 +244,17 @@ function IndexContent(content,hashOfObject,language)
   i--;
   while (i>=0) {
 
-
+        debug("------------------------ "+keywords[i]+" --------------------------");
         if(HTIgnoreWords[keywords[i]]==true)
         {
             debug("Ignoring keyword : "+keywords[i]);
 
         }
         else {
-
-
             var exists = getkeyword(keywords[i],"");            //Checking if achor type for the keyword already exists
 
             if(exists.name=="HolochainError")                   //If not , create anchor type with the keyword and then the link to content
             {
-
               call("anchor","anchor_type_create",keywords[i]);
               var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:hashOfObject};
               call("anchor","anchor_create",IndexContentByKeyword);
@@ -271,12 +263,11 @@ function IndexContent(content,hashOfObject,language)
             }
             else {                                              //Else, only create the anchor for content and link content(object)
                                                                 //to keyword
-
+              debug("Anchor type already exists");
               var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:hashOfObject};
-
               var checkexist = getkeyword(keywords[i],hashOfObject);
 
-                if(checkexist.C != JSON.stringify(IndexContentByKeyword)){
+              if(checkexist != JSON.stringify(IndexContentByKeyword)){
 
                 call("anchor","anchor_create",IndexContentByKeyword);
                 debug("Index created for - "+keywords[i]);
@@ -291,8 +282,9 @@ function IndexContent(content,hashOfObject,language)
     i--;
   }
   var lnk= call("anchor","anchor_type_list","");
-  var strlnk = lnk.toString();
-  debug("Object indexed for keywords : "+strlnk);
+  debug("*******************************************************************************************");
+  debug("Object indexed for keywords : ");
+  debug(lnk)
   return hashOfObject;
 
 }
@@ -303,12 +295,9 @@ function getkeyword(keyword,hashOfObject)
   var keywordAnchor = {Anchor_Type:keyword,Anchor_Text:hashOfObject};
 
   debug(keywordAnchor);
-  var kahash = makeHash(keywordAnchor);
+  var kahash = makeHash("anchor",keywordAnchor);
 
   var sources = get(kahash,{GetMask:HC.GetMask.Suorces});
-  //debug("Get keyword function : ")
-  //debug(sources);
-
   return sources;
 }
 
@@ -328,6 +317,7 @@ function getEnglishIW()
   var EnglishIgnoreWords = {};
 
   EnglishIgnoreWords['this'] = true;
+  EnglishIgnoreWords['for'] = true;
   EnglishIgnoreWords['This'] = true;
   EnglishIgnoreWords['the'] = true;
   EnglishIgnoreWords['is'] = true;
@@ -338,6 +328,9 @@ function getEnglishIW()
   EnglishIgnoreWords['to'] = true;
   EnglishIgnoreWords['be'] = true;
   EnglishIgnoreWords['we'] = true;
+  EnglishIgnoreWords['We'] = true;
+  EnglishIgnoreWords['can'] = true;
+  EnglishIgnoreWords['using'] = true;
   EnglishIgnoreWords[':'] = true;
   EnglishIgnoreWords['-'] = true;
 

@@ -2,15 +2,12 @@ function genesis(){
 
   //Calling addAnchor function for creating the base anchor
   baseAnchorHash = call("anchor","addAnchor","");
-  debug("IndexContent genesis");
-  debug("Base anchor added with hash - "+baseAnchorHash);
 
-  var ContentToIndex1 = {content:"holodex : We are Indexing this content using holodex app. this",details:"can include timestamp, etc."};
-
-  ContentToIndexhash1 = makeHash(ContentToIndex1);
+  /*var ContentToIndex1 = {content:"holodex : We are Indexing this content using holodex app. this",details:"can include timestamp, etc."};
+  ContentToIndexhash1 = makeHash("anchor",ContentToIndex1);
 
   var ContentToIndex2 = {content:"holodex can also be used for searching keywords",details:"can include timestamp,lication, etc."};
-  ContentToIndexhash2 = makeHash(ContentToIndex2);
+  ContentToIndexhash2 = makeHash("anchor",ContentToIndex2);*/
 
   //called in genesis temporarily. Once bridging between apps gets workig, index content will be called from the HC app that is
   //using holodex
@@ -28,109 +25,112 @@ function bridgeGenesis()
 //Function called by the HC app to search for a string of words and get all the objects indexed for the words.
 function searchKeywords(searchString)
 {
+
   var searchArr = searchString.split(/,| |:|-/);
   var i = searchArr.length;
-  var mergedList = {};
+  var mergedList = [];
   var list = [];
-  var listH = {};
 
   i--;
 
   while(i>=0)
   {
-
-    debug(searchArr[i]);
+    debug("\nComputing for keyword : "+searchArr[i]);
     list = call("anchor","anchor_list",searchArr[i]);
 
     var temp = JSON.parse(list);
-    debug(list);
+    //debug(list);
     for(var m=0;m<temp.length;m++)
     {
-      var temp1 = JSON.parse(temp[m].Anchor_Text);
-      debug(temp1.Anchor_Text);
-      listH[temp1.Anchor_Text] = true;
-      mergedList=union(mergedList,listH);
+      //debug("-----------In for loop : "+temp[m])
+      //var temp1 = JSON.parse(temp[m].Anchor_Text);
+      //debug(temp1.Anchor_Text);
+      //mergedList=union(mergedList,temp1.Anchor_Text);
+      mergedList=union(mergedList,temp[m]);
     }
 
     i--;
   }
+  //var jsonmer = JSON.parse(JSON.stringify(mergedList));
+  debug("\nSearched words exist in above objects !");
 
-  var jsonmer = Object.keys(mergedList);
-
-  return jsonmer;
+  return mergedList;
 }
 
 //To provide a list of all the objects that are indexed against the search string
-
-function union(mergedList,listH)
-
+function union(mergedList,list)
 {
-  var listKeys = Object.keys(listH);
 
-
-  debug(listKeys);
-  for (var i=0;i<listKeys.length;i++)
+  if(mergedList.length==0)
   {
-if(mergedList[listKeys[i] == true])
+    if(list != "")
+      mergedList.push(list);
+  }
+  else
+  {
+    check=find(mergedList,list);
 
+    if(check==false)
     {
-      debug("Already added to merged !");
-    }
-    else {
-      mergedList[listKeys[i]] = true;
+      if(list != "")
+      mergedList.push(list);
     }
   }
-  debug(mergedList);
+  //debug(mergedList);
   return mergedList;
+}
+
+//Function to check if the object has already been covered in the merged list
+function find(mainArr, check)
+{
+
+  for(i=0;i<=mainArr.length;i++)
+  {
+
+    if(mainArr[i] == check)
+    {
+      return true;
+    }
+  }
+  return false;
 }
 
 //Index content function is called from a HC application by passing the content and the hash of the object so that the link cant be
 //made directly to the object.
 function IndexContent(content,hashOfObject,language)
-//function IndexContent(msgObj)
 {
-  msgObj = {
-    content: content,
-    hashOfObject: hashOfObject,
-    language: language
-  };
-  var HTIgnoreWords = getIgnoreWords(msgObj.language);
-  //debug(HTIgnoreWords);
-  var keywords=msgObj.content.split(" ");
+  var HTIgnoreWords = getIgnoreWords(language);
+
+  var keywords=content.split(" ");
   var i = keywords.length;
 
   i--;
   while (i>=0) {
 
-
+        debug("------------------------ "+keywords[i]+" --------------------------");
         if(HTIgnoreWords[keywords[i]]==true)
         {
             debug("Ignoring keyword : "+keywords[i]);
 
         }
         else {
-
-
             var exists = getkeyword(keywords[i],"");            //Checking if achor type for the keyword already exists
 
             if(exists.name=="HolochainError")                   //If not , create anchor type with the keyword and then the link to content
             {
-
               call("anchor","anchor_type_create",keywords[i]);
-              debug("Index Content Function : --------"+msgObj.hashOfObject);
-              var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:msgObj.hashOfObject};
+              var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:hashOfObject};
               call("anchor","anchor_create",IndexContentByKeyword);
               debug("Index created for - "+keywords[i]);
 
             }
             else {                                              //Else, only create the anchor for content and link content(object)
                                                                 //to keyword
+              debug("Anchor type already exists");
+              var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:hashOfObject};
+              var checkexist = getkeyword(keywords[i],hashOfObject);
 
-              var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:msgObj.hashOfObject};
-
-              var checkexist = getkeyword(keywords[i],msgObj.hashOfObject);
-
-                if(checkexist.C != JSON.stringify(IndexContentByKeyword)){
+              if(checkexist != JSON.stringify(IndexContentByKeyword)){
 
                 call("anchor","anchor_create",IndexContentByKeyword);
                 debug("Index created for - "+keywords[i]);
@@ -145,9 +145,10 @@ function IndexContent(content,hashOfObject,language)
     i--;
   }
   var lnk= call("anchor","anchor_type_list","");
-  var strlnk = lnk.toString();
-  debug("Object indexed for keywords : "+strlnk);
-  return msgObj.hashOfObject;
+  debug("*******************************************************************************************");
+  debug("Object indexed for keywords : ");
+  debug(lnk)
+  return hashOfObject;
 
 }
 
@@ -157,51 +158,44 @@ function getkeyword(keyword,hashOfObject)
   var keywordAnchor = {Anchor_Type:keyword,Anchor_Text:hashOfObject};
 
   debug(keywordAnchor);
-  var kahash = makeHash(keywordAnchor);
+  var kahash = makeHash("anchor",keywordAnchor);
 
   var sources = get(kahash,{GetMask:HC.GetMask.Suorces});
-
   return sources;
 }
 
 //This is the list of common words(stop words) which do not need to Indexed for search. This list needs to be enhanced to cover all
 //possible ignore words
 function getIgnoreWords(language)
-
 {
   var IWreturn = {};
-  debug("Entered IW return function !")
-  IWreturn = loadIW(language);
 
-  return IWreturn;
+  IWreturn['English'] = getEnglishIW();
+
+  return IWreturn['English'];
 }
 
-function loadIW(language)
+function getEnglishIW()
 {
-  debug("Inside load IW !");
-  var ignoreList = loadignoreWords(language);
-  debug("Value of variable ignoreList is : "+ignoreList);
-  var ignoreListarr = ignoreList.split(" ");
-  var IgnoreWords = {};
+  var EnglishIgnoreWords = {};
 
-  for(var i=0; i<ignoreListarr.length;i++)
-  {
-    IgnoreWords[ignoreListarr[i]] = true;
-  }
-  return IgnoreWords;
-}
+  EnglishIgnoreWords['this'] = true;
+  EnglishIgnoreWords['for'] = true;
+  EnglishIgnoreWords['This'] = true;
+  EnglishIgnoreWords['the'] = true;
+  EnglishIgnoreWords['is'] = true;
+  EnglishIgnoreWords['a'] = true;
+  EnglishIgnoreWords['an'] = true;
+  EnglishIgnoreWords['are'] = true;
+  EnglishIgnoreWords['and'] = true;
+  EnglishIgnoreWords['to'] = true;
+  EnglishIgnoreWords['be'] = true;
+  EnglishIgnoreWords['we'] = true;
+  EnglishIgnoreWords['We'] = true;
+  EnglishIgnoreWords['can'] = true;
+  EnglishIgnoreWords['using'] = true;
+  EnglishIgnoreWords[':'] = true;
+  EnglishIgnoreWords['-'] = true;
 
-function loadignoreWords(language)
-{
-  var ignoreList = "";
-  if(language == "English")
-    ignoreList = "this This the is a an are and to be we : -";
-  else if(language == "Hindi")
-    ignoreList = "ये हिंदी उपेक्षा शब्द हैं";
-  else if(language == "German")
-    ignoreList = "Diese sind Deutsch ignorieren Worte";
-  else if(language == "Japanese")
-    ignoreList = "これらは日本語を無視する";
-
-return ignoreList;
+  return EnglishIgnoreWords;
 }
