@@ -23,10 +23,10 @@ function bridgeGenesis(side,dna,appData)
   return true;
 }
 
-function addToVolunteerNodes(){
+/*function addToVolunteerNodes(AppKeyHash){
 
   debug("In function addToVolunteerNodes");
-  var VolunteerNode = commit("VolunteerNode","true");
+  var VolunteerNode = commit("VolunteerNode",AppKeyHash);
   commit("volunteer_link",{Links:[{Base:App.Key.Hash,Link:VolunteerNode,Tag:"VolunteerNode"}]});
   debug("VolunteerNode :"+ VolunteerNode);
   var addSelfAsAnchor = {Anchor_Type:"IndexNodes",Anchor_Text:App.Key.Hash};
@@ -54,7 +54,7 @@ function addToVolunteerNodes(){
 
   return lnk;
 
-}
+}*/
 
 //Function called by the HC app to search for a string of words and get all the objects indexed for the words.
 function searchKeywords(searchString)
@@ -131,8 +131,12 @@ function find(mainArr, check)
 
 //Index content function is called from a HC application by passing the content and the hash of the object so that the link cant be
 //made directly to the object.
-function IndexContent(content,hashOfObject,language)
+function IndexContent(msgObj)
 {
+
+  content = msgObj.content;
+  hashOfObject = msgObj.hashOfObject;
+  language = msgObj.language;
   var HTIgnoreWords = getIgnoreWords(language);
 
   var keywords=content.split(" ");
@@ -233,3 +237,37 @@ function getEnglishIW()
 
   return EnglishIgnoreWords;
 }
+
+function isErr(result) {
+    return ((typeof result === 'object') && result.name == "HolochainError");
+}
+function validatePut(entry_type,entry,header,pkg,sources) {
+    return validate(entry_type,entry,header,sources);
+}
+function validateCommit(entry_type,entry,header,pkg,sources) {
+    return validate(entry_type,entry,header,sources);
+}
+// Local validate an entry before committing ???
+function validate(entry_type,entry,header,sources) {
+//debug("entry_type::"+entry_type+"entry"+entry+"header"+header+"sources"+sources);
+    if (entry_type == "anchor_links"||entry_type == "anchor") {
+      return true;
+    }
+    return true
+}
+
+function validateLink(linkingEntryType,baseHash,linkHash,tag,pkg,sources){
+    // this can only be "room_message_link" type which is linking from room to message
+//debug("LinkingEntry_type:"+linkingEntryType+" baseHash:"+baseHash+" linkHash:"+linkHash+" tag:"+tag+" pkg:"+pkg+" sources:"+sources);
+if(linkingEntryType=="anchor_links")
+return true;
+
+
+return true;
+}
+function validateMod(entry_type,hash,newHash,pkg,sources) {return false;}
+function validateDel(entry_type,hash,pkg,sources) {return false;}
+function validatePutPkg(entry_type) {return null}
+function validateModPkg(entry_type) { return null}
+function validateDelPkg(entry_type) { return null}
+function validateLinkPkg(entry_type) { return null}

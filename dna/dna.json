@@ -23,19 +23,7 @@
       "Description": "Generic indexing functions provision",
       "RibosomeType": "js",
       "CodeFile": "indexcontent.js",
-      "BridgeFuncs": ["IndexContent","searchKeywords","addToVolunteerNodes"],
-      "Entries": [
-        {
-            "Name": "VolunteerNode",
-            "DataFormat": "string",
-            "Sharing": "public"
-        },
-        {
-            "Name": "volunteer_link",
-            "DataFormat": "links",
-            "Sharing": "public"
-        }
-      ],
+      "BridgeFuncs": ["IndexContent","searchKeywords"],
       "Functions": [
         {
           "Name": "IndexContent",
