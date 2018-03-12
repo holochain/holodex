@@ -1,7 +1,7 @@
 {
     "Version": 1,
-    "UUID": "2c9cb3ab-7ded-11e7-99b2-08002781aba8",
-    "Name": "templateApp",
+    "UUID": "70ba9f71-2445-11e8-909e-08002781aba8",
+    "Name": "hd",
     "Properties": {
         "description": "provides an application template",
         "language": "en"
@@ -12,45 +12,44 @@
     },
     "Zomes": [
         {
-            "Name": "testZome",
-            "Description": "provide an template zome",
-            "CodeFile": "testZome.js",
+            "Name": "sampleZome",
+            "Description": "provide a sample zome",
+            "CodeFile": "sampleZome.js",
             "Entries": [
                 {
-                    "Name": "testEntry",
+                    "Name": "sampleEntry",
                     "DataFormat": "json",
                     "Schema": "",
-                    "SchemaFile": "",
+                    "SchemaFile": "sampleEntry.json",
                     "Sharing": "public"
                 }
             ],
             "RibosomeType": "js",
             "Functions": [
                 {
-                    "Name": "testEntryCreate",
+                    "Name": "sampleEntryCreate",
                     "CallingType": "json",
                     "Exposure": "public"
                 },
                 {
-                    "Name": "testEntryRead",
+                    "Name": "sampleEntryRead",
                     "CallingType": "json",
                     "Exposure": "public"
                 },
                 {
-                    "Name": "doTestAction",
+                    "Name": "doSampleAction",
                     "CallingType": "json",
                     "Exposure": "public"
                 }
             ],
             "BridgeFuncs": null,
-            "BridgeTo": {
-                "H": null
-            }
+            "BridgeTo": ""
         }
     ],
-    "RequiresVersion": 0,
+    "RequiresVersion": 18,
     "DHTConfig": {
-        "HashType": "sha2-256"
+        "HashType": "sha2-256",
+        "NeighborhoodSize": 0
     },
     "Progenitor": {
         "Identity": "",

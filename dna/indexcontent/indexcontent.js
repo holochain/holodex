@@ -1,5 +1,5 @@
 function genesis(){
-
+  debug("To side genesis!")
   //Calling addAnchor function for creating the base anchor
   baseAnchorHash = call("anchor","addAnchor","");
 
@@ -16,10 +16,44 @@ function genesis(){
 return true;
 }
 
-function bridgeGenesis()
+function bridgeGenesis(side,dna,appData)
 {
-  debug("Wroking bridgeGenesis on To side");
+  debug("Wroking bridgeGenesis on To side "+ side+" dna: "+dna+" appData: "+appData);
+
   return true;
+}
+
+function addToVolunteerNodes(){
+
+  debug("In function addToVolunteerNodes");
+  var VolunteerNode = commit("VolunteerNode","true");
+  commit("volunteer_link",{Links:[{Base:App.Key.Hash,Link:VolunteerNode,Tag:"VolunteerNode"}]});
+  debug("VolunteerNode :"+ VolunteerNode);
+  var addSelfAsAnchor = {Anchor_Type:"IndexNodes",Anchor_Text:App.Key.Hash};
+
+                                                                  //Checking if the Index Node anchor tyoe is created
+  var anchorMainIndex = {Anchor_Type:"IndexNodes",Anchor_Text:""};
+  var amhash = makeHash("anchor",anchorMainIndex);
+  var checkexist = get(amhash,{GetMask:HC.GetMask.Sources});
+
+  if(checkexist != JSON.stringify(anchorMainIndex)){           //If there are no index nodes(anhor type), create Index node tyoe
+  //if(checkexist == HC.HashNotFound){                         //and add self as IndexNodes
+
+    debug("Creating anchor type IndexNodes");
+
+    var indN = call("anchor","anchor_type_create","IndexNodes");
+    debug("Index node type added successfully with hash : "+indN);
+    debug("Adding self to index nodes ... "+App.Key.Hash);
+     var lnk = call("anchor","anchor_create",addSelfAsAnchor);
+
+  }
+  else {                                                      //Else just add self as IndexNodes anchor
+    debug("Adding self to index nodes ... "+App.Key.Hash);
+      var lnk = call("anchor","anchor_create",addSelfAsAnchor);
+  }
+
+  return lnk;
+
 }
 
 //Function called by the HC app to search for a string of words and get all the objects indexed for the words.

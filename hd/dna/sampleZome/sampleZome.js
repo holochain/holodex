@@ -8,7 +8,7 @@
  * Called only when your source chain is generated
  * @return {boolean} success
  */
-function genesis () {
+function genesis() {
   // any genesis code here
   return true;
 }
@@ -28,7 +28,7 @@ function genesis () {
  */
 function validateCommit (entryName, entry, header, pkg, sources) {
   switch (entryName) {
-    case "testEntry":
+    case "sampleEntry":
       // validation code here
       return false;
     default:
@@ -48,7 +48,7 @@ function validateCommit (entryName, entry, header, pkg, sources) {
  */
 function validatePut (entryName, entry, header, pkg, sources) {
   switch (entryName) {
-    case "testEntry":
+    case "sampleEntry":
       // validation code here
       return false;
 default:
@@ -69,7 +69,7 @@ default:
  */
 function validateMod (entryName, entry, header, replaces, pkg, sources) {
   switch (entryName) {
-    case "testEntry":
+    case "sampleEntry":
       // validation code here
       return false;
     default:
@@ -88,7 +88,7 @@ function validateMod (entryName, entry, header, replaces, pkg, sources) {
  */
 function validateDel (entryName,hash, pkg, sources) {
   switch (entryName) {
-    case "testEntry":
+    case "sampleEntry":
       // validation code here
 return false;
     default:

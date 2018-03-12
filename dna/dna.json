@@ -19,10 +19,11 @@
   },
   "Zomes": [
     {
-      "Name": "consumerApp",
-      "Description": "Zome dealing with functions relating to node to node communication and selection for index nodes",
+      "Name": "indexcontent",
+      "Description": "Generic indexing functions provision",
       "RibosomeType": "js",
-      "CodeFile": "consumerApp.js",
+      "CodeFile": "indexcontent.js",
+      "BridgeFuncs": ["IndexContent","searchKeywords","addToVolunteerNodes"],
       "Entries": [
         {
             "Name": "VolunteerNode",
@@ -33,41 +34,21 @@
             "Name": "volunteer_link",
             "DataFormat": "links",
             "Sharing": "public"
-        },
-        {
-        "Name": "Node4ForTest",
-        "DataFormat": "string",
-        "Sharing": "public"
         }
       ],
       "Functions": [
         {
-          "Name": "selectIndexNode",
-          "CallingType": "string",
-          "Exposure": "public"
-        },
-        {
-          "Name": "indexObject",
+          "Name": "IndexContent",
           "CallingType": "json",
           "Exposure": "public"
         },
         {
-          "Name": "searchContent",
+          "Name": "searchKeywords",
           "CallingType": "string",
           "Exposure": "public"
         },
         {
-          "Name": "bridgeGenesis",
-          "CallingType": "string",
-          "Exposure": "public"
-        },
-        {
-          "Name": "createObject1ForTest",
-          "CallingType": "string",
-          "Exposure": "public"
-        },
-        {
-          "Name": "createObject2ForTest",
+          "Name": "addToVolunteerNodes",
           "CallingType": "string",
           "Exposure": "public"
         }
@@ -122,27 +103,7 @@
             "CallingType": "string",
             "Exposure":"public"
           }
-
         ]
-    },
-    {
-      "Name": "indexcontent",
-      "Description": "Generic indexing functions provision",
-      "RibosomeType": "js",
-      "CodeFile": "indexcontent.js",
-      "BridgeFuncs": ["IndexContent","searchKeywords"],
-      "Functions": [
-        {
-          "Name": "IndexContent",
-          "CallingType": "json",
-          "Exposure": "public"
-        },
-        {
-          "Name": "searchKeywords",
-          "CallingType": "string",
-          "Exposure": "public"
-        }
-      ]
     }
   ]
 }
