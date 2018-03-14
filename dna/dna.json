@@ -34,13 +34,9 @@
           "Name": "searchKeywords",
           "CallingType": "string",
           "Exposure": "public"
-        },
-        {
-          "Name": "addToVolunteerNodes",
-          "CallingType": "string",
-          "Exposure": "public"
         }
-      ]
+      ],
+      "BridgeTo": ""
     },
   {
       "Name": "anchor",

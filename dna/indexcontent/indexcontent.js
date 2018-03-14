@@ -2,17 +2,6 @@ function genesis(){
   debug("To side genesis!")
   //Calling addAnchor function for creating the base anchor
   baseAnchorHash = call("anchor","addAnchor","");
-
-  /*var ContentToIndex1 = {content:"holodex : We are Indexing this content using holodex app. this",details:"can include timestamp, etc."};
-  ContentToIndexhash1 = makeHash("anchor",ContentToIndex1);
-
-  var ContentToIndex2 = {content:"holodex can also be used for searching keywords",details:"can include timestamp,lication, etc."};
-  ContentToIndexhash2 = makeHash("anchor",ContentToIndex2);*/
-
-  //called in genesis temporarily. Once bridging between apps gets workig, index content will be called from the HC app that is
-  //using holodex
-  //IndexContent(ContentToIndex1.content,ContentToIndexhash1,"English");
-  //IndexContent(ContentToIndex2.content,ContentToIndexhash2,"English");
 return true;
 }
 
@@ -73,19 +62,15 @@ function searchKeywords(searchString)
     list = call("anchor","anchor_list",searchArr[i]);
 
     var temp = JSON.parse(list);
-    //debug(list);
+
     for(var m=0;m<temp.length;m++)
     {
-      //debug("-----------In for loop : "+temp[m])
-      //var temp1 = JSON.parse(temp[m].Anchor_Text);
-      //debug(temp1.Anchor_Text);
-      //mergedList=union(mergedList,temp1.Anchor_Text);
       mergedList=union(mergedList,temp[m]);
     }
 
     i--;
   }
-  //var jsonmer = JSON.parse(JSON.stringify(mergedList));
+
   debug("\nSearched words exist in above objects !");
 
   return mergedList;
@@ -247,9 +232,8 @@ function validatePut(entry_type,entry,header,pkg,sources) {
 function validateCommit(entry_type,entry,header,pkg,sources) {
     return validate(entry_type,entry,header,sources);
 }
-// Local validate an entry before committing ???
+
 function validate(entry_type,entry,header,sources) {
-//debug("entry_type::"+entry_type+"entry"+entry+"header"+header+"sources"+sources);
     if (entry_type == "anchor_links"||entry_type == "anchor") {
       return true;
     }
@@ -257,8 +241,6 @@ function validate(entry_type,entry,header,sources) {
 }
 
 function validateLink(linkingEntryType,baseHash,linkHash,tag,pkg,sources){
-    // this can only be "room_message_link" type which is linking from room to message
-//debug("LinkingEntry_type:"+linkingEntryType+" baseHash:"+baseHash+" linkHash:"+linkHash+" tag:"+tag+" pkg:"+pkg+" sources:"+sources);
 if(linkingEntryType=="anchor_links")
 return true;
 
