@@ -202,24 +202,42 @@ function getEnglishIW()
 {
   var EnglishIgnoreWords = {};
 
-  EnglishIgnoreWords['this'] = true;
-  EnglishIgnoreWords['for'] = true;
-  EnglishIgnoreWords['This'] = true;
-  EnglishIgnoreWords['the'] = true;
-  EnglishIgnoreWords['is'] = true;
-  EnglishIgnoreWords['a'] = true;
-  EnglishIgnoreWords['an'] = true;
-  EnglishIgnoreWords['are'] = true;
-  EnglishIgnoreWords['and'] = true;
-  EnglishIgnoreWords['to'] = true;
-  EnglishIgnoreWords['be'] = true;
-  EnglishIgnoreWords['we'] = true;
-  EnglishIgnoreWords['We'] = true;
-  EnglishIgnoreWords['can'] = true;
-  EnglishIgnoreWords['using'] = true;
-  EnglishIgnoreWords[':'] = true;
-  EnglishIgnoreWords['-'] = true;
-
+  EnglishIgnoreWords["a"]=true;
+  EnglishIgnoreWords["am"]=true;
+  EnglishIgnoreWords["an"]=true;
+  EnglishIgnoreWords["and"]=true;
+  EnglishIgnoreWords["are"]=true;
+  EnglishIgnoreWords["as"]=true;
+  EnglishIgnoreWords["at"]=true;
+  EnglishIgnoreWords["be"]=true;
+  EnglishIgnoreWords["but"]=true;
+  EnglishIgnoreWords["by"]=true;
+  EnglishIgnoreWords["can"]=true;
+  EnglishIgnoreWords["cannot"]=true;
+  EnglishIgnoreWords["could"]=true;
+  EnglishIgnoreWords["couldnt"]=true;
+  EnglishIgnoreWords["do"]=true;
+  EnglishIgnoreWords["done"]=true;
+  EnglishIgnoreWords["for"]=true;
+  EnglishIgnoreWords["get"]=true;
+  EnglishIgnoreWords["go"]=true;
+  EnglishIgnoreWords["had"]=true;
+  EnglishIgnoreWords["has"]=true;
+  EnglishIgnoreWords["have"]=true;
+  EnglishIgnoreWords["he"]=true;
+  EnglishIgnoreWords["her"]=true;
+  EnglishIgnoreWords["here"]=true;
+  EnglishIgnoreWords["him"]=true;
+  EnglishIgnoreWords["his"]=true;
+  EnglishIgnoreWords["how"]=true;
+  EnglishIgnoreWords["i"]=true;
+  EnglishIgnoreWords["if"]=true;
+  EnglishIgnoreWords["in"]=true;
+  EnglishIgnoreWords["into"]=true;
+  EnglishIgnoreWords["is"]=true;
+  EnglishIgnoreWords["it"]=true;
+  EnglishIgnoreWords["it's"]=true;
+  EnglishIgnoreWords["my"]=true;
   return EnglishIgnoreWords;
 }
 
