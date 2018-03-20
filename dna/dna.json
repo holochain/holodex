@@ -17,6 +17,7 @@
   "BasedOn": {
       "H": null
   },
+
   "Zomes": [
     {
       "Name": "indexcontent",
@@ -24,6 +25,9 @@
       "RibosomeType": "js",
       "CodeFile": "indexcontent.js",
       "BridgeFuncs": ["IndexContent","searchKeywords"],
+      "Config":{
+              "ErrorHandling":"returnErrorValue"
+            },
       "Functions": [
         {
           "Name": "IndexContent",
@@ -43,6 +47,9 @@
       "Description": "Anchor zome",
       "RibosomeType": "js",
       "CodeFile": "anchor.js",
+      "Config":{
+              "ErrorHandling":"returnErrorValue"
+},
       "Entries": [
           {
               "Name": "anchor",
@@ -94,6 +101,9 @@
       "Description": "Zome dealing with functions relating to node to node communication and selection for index nodes",
       "RibosomeType": "js",
       "CodeFile": "consumerApp.js",
+      "Config":{
+              "ErrorHandling":"returnErrorValue"
+            },
       "Entries": [
         {
             "Name": "VolunteerNode",

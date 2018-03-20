@@ -137,9 +137,12 @@ function IndexContent(msgObj)
 
         }
         else {
+
             var exists = getkeyword(keywords[i],"");            //Checking if achor type for the keyword already exists
 
-            if(exists.name=="HolochainError")                   //If not , create anchor type with the keyword and then the link to content
+
+            //if(exists.name=="HolochainError")                   //If not , create anchor type with the keyword and then the link to content
+            if(exists == null)
             {
               call("anchor","anchor_type_create",keywords[i]);
               var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:hashOfObject};
@@ -178,12 +181,14 @@ function IndexContent(msgObj)
 //Function to check existance of the anchor object
 function getkeyword(keyword,hashOfObject)
 {
+
   var keywordAnchor = {Anchor_Type:keyword,Anchor_Text:hashOfObject};
 
   debug(keywordAnchor);
   var kahash = makeHash("anchor",keywordAnchor);
 
   var sources = get(kahash,{GetMask:HC.GetMask.Suorces});
+
   return sources;
 }
 
