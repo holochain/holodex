@@ -6,7 +6,7 @@
         "Zome": "consumerApp",
         "FnName": "bridgeGenesis",
         "Input" : "true",
-        "Output": "true",
+        "Output": "%key%",
         "Exposure":"public",
         "Err": "",
         "Regexp": ""
@@ -15,8 +15,8 @@
         "Convey":"Checking that the select index function selects itself when the current node is index node.",
         "Zome": "consumerApp",
         "FnName": "selectIndexNode",
-        "Input" : "%r1%",
-        "Output": "QmdLmLgKxbHGt89ECUNFy2RNGxRzAYJheDdjZqJLgXguH2",
+        "Input" : "",
+        "Output": "%key%",
         "Exposure":"public",
         "Err": "",
         "Regexp": ""

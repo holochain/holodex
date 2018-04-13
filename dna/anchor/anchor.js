@@ -16,6 +16,7 @@ function getMainAchorHash()
   return hashAnchorMain;
 }
 
+
 function getAnchorTypeHash(anchor_type)
 {
   var anchorType = {Anchor_Type:anchor_type,Anchor_Text:""};
@@ -30,7 +31,7 @@ function addAnchor()
   commit("anchor_links", {Links:[{Base:dna,Link:anchor_main_hash,Tag:"Anchor"}]});
   var lnk = getLinks(dna,"Anchor",{Load : true});
   //var lnk = get(anchor_main_hash);
-  debug("Main anchor hash on link - "+lnk[0]["Hash"]);
+  debug("Main anchor hash on "+ dna+" link - "+lnk[0]["Hash"]);
 
   //return lnk.Links[0].H;
   return lnk[0]["Hash"];

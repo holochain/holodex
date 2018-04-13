@@ -1,0 +1,32 @@
+{
+    "Tests":
+    [
+      {
+          "Convey":"Non index node 2 is set at bridge genesis",
+          "Zome":"consumerApp",
+          "FnName":"bridgeGenesis",
+          "Input":"false",
+          "Output":"Not volunteering",
+          "Err":"",
+          "Time" : 6500
+      },
+      {
+          "Convey":"Non index Node 2 Chooses either index node 1 or 2",
+          "Zome":"consumerApp",
+          "FnName":"selectIndexNode",
+          "Input":"",
+          "Output":"",
+          "Err":"",
+          "Time" : 7000
+      },
+      {
+          "Convey":"Non index Node 2 should have synced with node 1/2(Index node)",
+          "Zome":"indexcontent",
+          "FnName":"searchKeywords",
+          "Input":"holodex,We are searching:here,holodex",
+          "Output":"QmNTFhCuQhUQPCverEff4zFr6b54FgLnrnBuGWyGfYaofV,QmYZEj5N2zMuVBATP8cVSHAtF5an8VE4YZVcPsnLATPmbG",
+          "Err":"",
+          "Time" : 7500
+      }
+  ]
+}

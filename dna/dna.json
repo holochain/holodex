@@ -114,11 +114,6 @@
             "Name": "volunteer_link",
             "DataFormat": "links",
             "Sharing": "public"
-        },
-        {
-        "Name": "Node4ForTest",
-        "DataFormat": "string",
-        "Sharing": "public"
         }
       ],
       "Functions": [

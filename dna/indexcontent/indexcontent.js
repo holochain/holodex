@@ -186,9 +186,11 @@ function getkeyword(keyword,hashOfObject)
 
   debug(keywordAnchor);
   var kahash = makeHash("anchor",keywordAnchor);
-
-  var sources = get(kahash,{GetMask:HC.GetMask.Suorces});
-
+  debug("Keyword anchor hash : ");
+  debug(kahash);
+  var sources = get(kahash,{GetMask:HC.GetMask.Sources});
+  debug("Sources : ");
+  debug(sources);
   return sources;
 }
 

@@ -4,7 +4,7 @@ function genesis()
   return true;
 }
 
-function bridgeGenesis(VolunteerForIndex)                     //Volunteering Ratio to be added
+/*function bridgeGenesis(VolunteerForIndex)                     //Volunteering Ratio to be added
 {
 
   if(VolunteerForIndex == "true")
@@ -46,9 +46,8 @@ function bridgeGenesis(VolunteerForIndex)                     //Volunteering Rat
     commit("volunteer_link",{Links:[{Base:App.Key.Hash,Link:VolunteerNode,Tag:"VolunteerNode"}]});
     return false;
   }*/
-}
-
-function selectIndexNode()
+//}
+/*function selectIndexNode()
 {
 
   var VolunteerNodeH = getLinks(App.Key.Hash,"VolunteerNode",{Load:true});
@@ -71,9 +70,68 @@ function selectIndexNode()
     var key = IndexNodesjs[selectedNumber].Anchor_Text;
   }
   return key;
+}*/
+
+function bridgeGenesis(VolunteerForIndex)
+{
+  debug("bridgeGenesis called holodex --- consumeHolodex side ");
+  if(VolunteerForIndex == "true")
+  {
+    //var lnk = bridge(bridgeHash,"indexcontent","addToVolunteerNodes",App.Key.Hash);
+    var vol = commit("VolunteerNode",App.Key.Hash);
+    debug("App key hash node added : "+App.Key.Hash);
+    debug("With hash :"+vol);
+    commit("volunteer_link",{Links:[{Base:App.DNA.Hash,Link:vol,Tag:"Volunteer_Node"}]});
+
+    var lnk = get(vol);
+    debug("Volunteer node added : "+ lnk);
+
+  }
+  else{
+    var lnk = "Not volunteering";
+  }
+  return lnk;
+}
+function selectIndexNode()
+{
+  var thisNodeIsVolunteering = false;
+  var indexNodes=[];
+  debug("App DNA Hash : "+App.DNA.Hash);
+
+  var VolunteerNodeH = getLinks(App.DNA.Hash,"Volunteer_Node",{Load:true});
+
+  //var thisEntryType = get(App.Key.Hash,{GetMask:HC.GetMask.EntryType});
+  debug("All Volunteer Nodes :");
+  debug(VolunteerNodeH);
+
+  for(var i=0; i<VolunteerNodeH.length;i++){
+    if(VolunteerNodeH[i].Entry == App.Key.Hash){
+      thisNodeIsVolunteering = true
+    }
+  }
+  if(thisNodeIsVolunteering == true)
+  {
+    var key = App.Key.Hash;
+  }
+  else
+  {
+    for(var i=0;i<VolunteerNodeH.length;i++){
+      indexNodes.push(VolunteerNodeH[i].Entry)
+    }
+
+    var numberOfIndexNodes = indexNodes.length;
+    debug("Number of index nodes : "+numberOfIndexNodes);
+                                                                    //Randomly select a node for indexing
+    var selectedNumber = Math.floor(Math.random()*numberOfIndexNodes);
+
+    var key = indexNodes[selectedNumber];
+    debug("Key selected :"+key)
+    //debug(JSON.parse(key));
+  }
+  return key;
 }
 
-function createObject1ForTest()
+/*function createObject1ForTest()
 {
   var ContentToIndex1 = {content:"holodex : We are Indexing this content using holodex app. this",details:"can include timestamp, etc."};
   ContentToIndexhash1 = makeHash("anchor",ContentToIndex1);
@@ -85,7 +143,7 @@ function createObject2ForTest()
   var ContentToIndex2 = {content:"holodex can also be used for searching keywords",details:"can include timestamp,lication, etc."};
   ContentToIndexhash2 = makeHash("anchor",ContentToIndex2);
   return ContentToIndexhash1;
-}
+}*/
 
 function indexObject(object)
 {
@@ -300,8 +358,10 @@ function getkeyword(keyword,hashOfObject)
 
   debug(keywordAnchor);
   var kahash = makeHash("anchor",keywordAnchor);
-
+  debug("Keyword anchor hash : ");
+  debug(kahash);
   var sources = get(kahash,{GetMask:HC.GetMask.Suorces});
+  debug("Sources : ");
   debug(sources);
   return sources;
 }

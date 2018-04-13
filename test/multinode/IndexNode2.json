@@ -1,0 +1,32 @@
+{
+    "Tests":
+    [
+      {
+          "Convey":"Node 3 is set as index node at bridge genesis ",
+          "Zome":"consumerApp",
+          "FnName":"bridgeGenesis",
+          "Input":"true",
+          "Output":"%key%",
+          "Err":"",
+          "Time":5000
+      },
+      {
+          "Convey":"Index Node 2 Chooses itself for indexing",
+          "Zome":"consumerApp",
+          "FnName":"selectIndexNode",
+          "Input":"",
+          "Output":"%key%",
+          "Err":"",
+          "Time":5500
+      },
+      {
+          "Convey":"Index Node 2 performs search and receives expected result",
+          "Zome":"consumerApp",
+          "FnName":"searchContent",
+          "Input":"holodex,We are searching:here,holodex",
+          "Output":"QmNTFhCuQhUQPCverEff4zFr6b54FgLnrnBuGWyGfYaofV,QmYZEj5N2zMuVBATP8cVSHAtF5an8VE4YZVcPsnLATPmbG",
+          "Err":"",
+          "Time":6000
+      }
+    ]
+}

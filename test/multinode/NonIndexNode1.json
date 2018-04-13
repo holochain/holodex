@@ -1,0 +1,42 @@
+{
+    "Tests":
+    [
+      {
+          "Convey":"Non index Node 1 is set as non index node at bridge genesis ",
+          "Zome":"consumerApp",
+          "FnName":"bridgeGenesis",
+          "Input":"false",
+          "Output":"Not volunteering",
+          "Err":""
+      },
+      {
+          "Convey":"Non index Node 1 Chooses an index node for indexing",
+          "Zome":"consumerApp",
+          "FnName":"selectIndexNode",
+          "Input":"",
+          "Output":"%result1%",
+          "Err":"",
+          "Time":3500
+      },
+      {
+          "Convey":"Non index Node 1 indexes content",
+          "Zome":"consumerApp",
+          "FnName":"indexObject",
+          "Input":{"content":"holodex can also be used for searching keywords","details":"can include timestamp,lication, etc."},
+          "Output":"\"QmNTFhCuQhUQPCverEff4zFr6b54FgLnrnBuGWyGfYaofV\"",
+          "Err":"",
+          "Time":4000
+      },
+      {
+          "Convey":"Search function test for keywords existing in only one of the objects",
+          "Zome": "consumerApp",
+          "FnName": "searchContent",
+          "Input" : "searching",
+          "Output": "[\"QmNTFhCuQhUQPCverEff4zFr6b54FgLnrnBuGWyGfYaofV\"]",
+          "Exposure":"public",
+          "Err": "",
+          "Regexp": "",
+          "Time":4500
+      }
+    ]
+}

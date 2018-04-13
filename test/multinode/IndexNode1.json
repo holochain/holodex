@@ -1,0 +1,39 @@
+{
+    "Tests":
+    [
+      {
+          "Convey":"Index Node 1 is set at bridge genesis ",
+          "Zome":"consumerApp",
+          "FnName":"bridgeGenesis",
+          "Input":"true",
+          "Output":"%key%",
+          "Err":""
+      },
+      {
+          "Convey":"Index Node 1 Chooses itself as node for indexing",
+          "Zome":"consumerApp",
+          "FnName":"selectIndexNode",
+          "Input":"",
+          "Output":"%key%",
+          "Err":""
+      },
+      {
+          "Convey":"Node 1 indexes content",
+          "Zome":"consumerApp",
+          "FnName":"indexObject",
+          "Input":{"content":"holodex : We are Indexing this content using holodex app. this","details":"can include timestamp, etc."},
+          "Output":"\"QmYZEj5N2zMuVBATP8cVSHAtF5an8VE4YZVcPsnLATPmbG\"",
+          "Err":""
+      },
+      {
+          "Convey":"Search function test for keywords existing in only one of the objects",
+          "Zome": "consumerApp",
+          "FnName": "searchContent",
+          "Input" : "content",
+          "Output": "[\"QmYZEj5N2zMuVBATP8cVSHAtF5an8VE4YZVcPsnLATPmbG\"]",
+          "Exposure":"public",
+          "Err": "",
+          "Regexp": ""
+      }
+  ]
+}
