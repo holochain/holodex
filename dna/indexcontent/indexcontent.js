@@ -126,15 +126,21 @@ function IndexContent(msgObj)
 
   var keywords=content.split(" ");
   var i = keywords.length;
-
   i--;
   while (i>=0) {
 
         debug("------------------------ "+keywords[i]+" --------------------------");
+
         if(HTIgnoreWords[keywords[i]]==true)
         {
             debug("Ignoring keyword : "+keywords[i]);
 
+        }
+        else if(keywords[i] == ""){
+            debug("Ignoring blank string");
+        }
+        else if(keywords[i].length == 1 && (/[a-z]/.test(keywords[i])) == true){
+          debug("Ignoring single character "+keywords[i]);
         }
         else {
 
@@ -148,7 +154,6 @@ function IndexContent(msgObj)
               var IndexContentByKeyword = {Anchor_Type:keywords[i],Anchor_Text:hashOfObject};
               call("anchor","anchor_create",IndexContentByKeyword);
               debug("Index created for - "+keywords[i]);
-
             }
             else {                                              //Else, only create the anchor for content and link content(object)
                                                                 //to keyword
@@ -209,7 +214,7 @@ function getEnglishIW()
 {
   var EnglishIgnoreWords = {};
 
-  EnglishIgnoreWords["a"]=true;
+  EnglishIgnoreWords["A"]=true;
   EnglishIgnoreWords["am"]=true;
   EnglishIgnoreWords["an"]=true;
   EnglishIgnoreWords["and"]=true;
@@ -222,7 +227,7 @@ function getEnglishIW()
   EnglishIgnoreWords["can"]=true;
   EnglishIgnoreWords["cannot"]=true;
   EnglishIgnoreWords["could"]=true;
-  EnglishIgnoreWords["couldnt"]=true;
+  EnglishIgnoreWords["couldn't"]=true;
   EnglishIgnoreWords["do"]=true;
   EnglishIgnoreWords["done"]=true;
   EnglishIgnoreWords["for"]=true;
@@ -234,10 +239,13 @@ function getEnglishIW()
   EnglishIgnoreWords["he"]=true;
   EnglishIgnoreWords["her"]=true;
   EnglishIgnoreWords["here"]=true;
+  EnglishIgnoreWords["there"]=true;
+  EnglishIgnoreWords["that"]=true;
+  EnglishIgnoreWords["the"]=true;
   EnglishIgnoreWords["him"]=true;
   EnglishIgnoreWords["his"]=true;
   EnglishIgnoreWords["how"]=true;
-  EnglishIgnoreWords["i"]=true;
+  EnglishIgnoreWords["I"]=true;
   EnglishIgnoreWords["if"]=true;
   EnglishIgnoreWords["in"]=true;
   EnglishIgnoreWords["into"]=true;
